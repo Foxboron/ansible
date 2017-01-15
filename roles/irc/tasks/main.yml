@@ -1,0 +1,15 @@
+---
+
+- name: install inspircd and atheme
+  apt: name=inspircd,atheme-services state=present 
+
+- name: install inspircd files
+  copy: src=inspircd dest=/etc owner=root group=root mode=0644
+  notify:
+      - reload inspircd
+
+- name: install atheme files
+  copy: src=atheme dest=/etc owner=root group=root mode=0644
+  notify:
+      - reload atheme-services
+

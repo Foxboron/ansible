@@ -1,0 +1,16 @@
+---
+
+- name: restart inspircd
+  service: name=inspircd state=restarted
+
+- name: reload inspircd
+  service: name=inspircd state=reloaded
+
+- name: restart atheme-services
+  service: name=atheme-services state=restarted
+
+- name: reload atheme-services
+  service: name=atheme-services state=reloaded
+
+- name: daemon reload
+  command: systemctl daemon-reload

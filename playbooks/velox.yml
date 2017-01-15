@@ -1,0 +1,14 @@
+---
+
+- name: setup velox
+  hosts: velox
+  roles:
+      #- { role: nginx, tags: ['nginx']}
+      - { role: common, tags: ['common']}
+      - { role: irc, tags: ['irc']}
+      - { role: nginx,
+          letsencrypt_validation_dir: "/srv/http/letsencrypt",
+          letsencrypt_config_dir: "/etc/nginx/letsencrypt",
+          nginx_certs: "/etc/nginx/certs",
+          tags: ['nginx']}
+      - { role: blog, blog_domain: "velox.vulpes.pw", ssl: true, blog_path: "/srv/http/blog", tags: ['blog']}

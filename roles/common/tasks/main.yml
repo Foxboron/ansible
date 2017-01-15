@@ -1,0 +1,7 @@
+---
+
+- name: set timezone to Europe/Oslo
+  timezone: name=Europe/Oslo
+
+- name: install default packagesj 
+  apt: name=vim,htop,irssi,tmux state=present

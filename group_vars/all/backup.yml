@@ -1,0 +1,3 @@
+backup:
+    name: "Backup"
+    ssh_keys: fox.pub

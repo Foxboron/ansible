@@ -1,0 +1,66 @@
+==================================================================
+https://keybase.io/fox
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://velox.pw
+  * I am fox (https://keybase.io/fox) on keybase.
+  * I have a public key with fingerprint CDC1 F0D2 CE5F BB1D 8FC5  A660 7B00 1AE2 70CF B413
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "cdc1f0d2ce5fbb1d8fc5a6607b001ae270cfb413",
+            "host": "keybase.io",
+            "key_id": "7b001ae270cfb413",
+            "uid": "1af39a2e9662856bf7df0bb4af6af300",
+            "username": "fox"
+        },
+        "service": {
+            "hostname": "velox.pw",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1403804226,
+    "expire_in": 157680000,
+    "prev": "7d3d013a9ea5fd8e49bf57740e1b6f37f1232f57246473b912810b7d992e019b",
+    "seqno": 17,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v0.1.22
+Comment: https://keybase.io/crypto
+
+yMHjAnicbZFrSBRfGMZ307xV4JdcilppMoLc7MxlZ3aW8B+WCCVhVOp6YZ0zc2Zn
++Lsz6141XZEuIIIubOiHojC6XuxLRIqkLCpBiUtGhV20GyFWUp9CSM0zYt86Xw7n
+9z7P856Xd2xTiinLHOqrn56fTMswjyfmQqbjfVVFzQTUpSbC2Uz8j1YvWdU8yO/z
+q1qQcBKiJJIykCgR2WUISckhi3aBZQEHASAFRHFAlCFD0oSNUPSA4cAxUAigAlXH
+DD/cqoTpP/Sh1QIpyDQvUIhnWcphZ6HMSTKAkBFkFlcAMIQB5NcEL8JqWW8kojYC
+g7AqYtC82nWtGEb1emOBL4ItPr8e1EW9HlMlGPQ5DVOwyWeoIgi61/xuqGoSHhcb
+wsgfUHWNcJJYKQZVI5BkAO0ADEWxNgI1+lQ/cquGws6xDoCP0QaFjeEkWgIkLfBI
+sMuSAzE8lO0cxwBEQlamOZmkaAoTimEZjoY8STlIADmJ5ykESB7i/gHUoOk4m8P/
+FDw4M6B6NCEY8iMiOpKoSTWZs0xp69cZGzNlZWb/3WM0lv6ntJs5u/iiNzw24ar1
+kjVTN5Qr1uLNs3MfPpZVXv2Vv7+iQr5/sMt64XLSU3L3tK1rcDmloWDHTPn7Fuve
+R2nD3vZRQQoVPZkufhePbPmUCFu0jZX5d3J+E97e522uncrQ1urWjnPFo2XbymH7
+rVOfFe8G5Uw8b3tGHaVI2YGYq20QpE8kLKmV936cTAy9PhyPJSusi7mPvw0Q8wtH
+nu2pXR542s7sunmxuv/rgWGCapBcU+M5//18c02JJzvPt758mxtN7fQtlXTH43UP
+qtSlHktH4dHIiWP8IXhdbImaY3kzpaW3ZzPzynoKL/U/nPw+yCe53RbnyL4vC3Ov
+VgD1Dw/A
+=5X2K
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/fox
+
+==================================================================
+

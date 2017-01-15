@@ -1,0 +1,13 @@
+---
+
+- name: restart nginx
+  service: name=nginx state=restarted
+
+- name: reload nginx
+  service: name=nginx state=reloaded
+
+- name: daemon reload
+  command: systemctl daemon-reload
+
+- name: start letsencrypt 
+  command: systemctl start letsencrypt 

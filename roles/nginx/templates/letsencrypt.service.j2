@@ -1,0 +1,11 @@
+[Unit]
+Description=Lets Encrypt provider
+
+[Service]
+Type=oneshot
+ExecStart={{ letsencrypt_config_dir }}/renew_cert.sh \
+    {{ letsencrypt_validation_dir }} \
+    {{ letsencrypt_config_dir }} \
+    {{ nginx_certs }}
+ExecStartPost=/bin/systemctl reload nginx.service
+
