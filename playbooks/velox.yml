@@ -3,9 +3,8 @@
 - name: setup velox
   hosts: velox
   roles:
-      #- { role: nginx, tags: ['nginx']}
       - { role: common, tags: ['common']}
-      - { role: irc, tags: ['irc']}
+      # - { role: irc, tags: ['irc']}
       - { role: nginx,
           letsencrypt_validation_dir: "/srv/http/letsencrypt",
           letsencrypt_config_dir: "/etc/nginx/letsencrypt",
