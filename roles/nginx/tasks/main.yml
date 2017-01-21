@@ -5,8 +5,6 @@
 
 - name: configure nginx
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
-  notify:
-      - restart nginx
 
 - name: snippets directory
   file: state=directory path=/etc/nginx/snippets owner=root group=root mode=0755
@@ -16,8 +14,6 @@
   with_items:
     - letsencrypt.conf
     - sslsettings.conf
-  notify:
-    - reload nginx
 
 - name: create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
@@ -34,17 +30,18 @@
 - name: create /srv/http 
   file: owner=www-data group=www-data mode=0755 path=/srv/http state=directory
 
+# - name: install catch-all config 
+#   template: src=nginx-letsencrypt-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-letsencrypt-vhost.conf owner=root group=root mode=0644
+
 - name: install inventory_hostname vhost
   template: src=nginx-hostname-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-hostname-vhost.conf owner=root group=root mode=0644
-  notify:
-    - reload nginx
 
 
 - name: create nginx letsencrypt directory 
   file: owner=root group=root mode=0750 path={{ letsencrypt_config_dir }} state=directory
 
-- name: create nginx certs 
-  file: owner=root group=root mode=0750 path={{ nginx_certs }} state=directory
+- name: create letsencrypt certs directory
+  file: owner=root group=root mode=0750 path={{ letsencrypt_certs }} state=directory
 
 - name: install letsencrypt files
   copy: src=letsencrypt/ dest={{ letsencrypt_config_dir }} owner=root group=root mode=0744
@@ -62,3 +59,5 @@
 
 - name: enable nginx
   service: name=nginx enabled=yes
+  notify:
+    - reload nginx

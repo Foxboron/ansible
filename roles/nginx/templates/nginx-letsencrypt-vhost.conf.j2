@@ -2,9 +2,8 @@ server {
     listen       80 default_server;
     listen       [::]:80 default_server;
     root         /srv/http;
-
     server_name
-    {% for domain in domains %}
+    {% for domain in letsencrypt_catchall_domains %}
         {{ domain }}
     {% endfor %}
     ;

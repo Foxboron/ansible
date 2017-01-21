@@ -6,6 +6,8 @@ events {
 
 #error_log syslog:server=unix:/dev/log,nohostname info;
 
+user {{ http_user_group[0] }} {{ http_user_group[1] }};
+
 http {
     include       mime.types;
     default_type  application/octet-stream;

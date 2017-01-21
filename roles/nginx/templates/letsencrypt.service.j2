@@ -6,6 +6,6 @@ Type=oneshot
 ExecStart={{ letsencrypt_config_dir }}/renew_cert.sh \
     {{ letsencrypt_validation_dir }} \
     {{ letsencrypt_config_dir }} \
-    {{ nginx_certs }}
+    {{ letsencrypt_certs }}
 ExecStartPost=/bin/systemctl reload nginx.service
 

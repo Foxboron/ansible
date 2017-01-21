@@ -2,12 +2,30 @@
 
 - name: setup velox
   hosts: velox
+  vars:
+    letsencrypt_certs: "/etc/nginx/certs"
+    http_user_group: ["www-data", "www-data"]
   roles:
       - { role: common, tags: ['common']}
-      # - { role: irc, tags: ['irc']}
       - { role: nginx,
           letsencrypt_validation_dir: "/srv/http/letsencrypt",
           letsencrypt_config_dir: "/etc/nginx/letsencrypt",
-          nginx_certs: "/etc/nginx/certs",
+          domains: [".velox.pw",".vulpes.pw"],
           tags: ['nginx']}
-      - { role: blog, blog_domain: "velox.vulpes.pw", ssl: true, blog_path: "/srv/http/blog", tags: ['blog']}
+      - { role: blog,
+          domain: "velox.vulpes.pw", 
+          path: "/srv/http/blog", 
+          tags: ['blog']}
+      - { role: irc, 
+          domain: "irc.velox.pw", 
+          tags: ['irc']}
+      - { role: gitolite,
+          path: "/srv/git",
+          admin_keys: ["fox.pub"],
+          tags: ['gitolite','git']}
+      - { role: cgit,
+          ssl: true,
+          path: "/srv/git",
+          domain: "git.velox.pw",
+          tags: ['cgit', 'git']}
+

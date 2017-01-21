@@ -1,20 +1,18 @@
 ---
 
 - name: make blog user
-  user: name=blog shell=/bin/false home={{ blog_path }} createhome=no
+  user: name=blog shell=/bin/false home={{ path }} createhome=no
 
 - name: fix home permissions
-  file: state=directory owner=blog group=blog path="{{ blog_path }}"
+  file: state=directory owner=blog group=blog path="{{ path }}"
 
 - name: copy base blog
-  copy: src=blog/ dest={{ blog_path }} owner=blog group=blog mode=0644
+  copy: src=blog/ dest={{ path }} owner=blog group=blog mode=0644
 
-- name: add domain into SAN
-  command: /usr/bin/add_san_domain {{ blog_domain }}
-  when: ssl
+- include: ../tasks/ssl.yml
 
 - name: make nginx log dir
-  file: path=/var/log/nginx/{{ blog_domain }} state=directory owner=www-data group=adm mode=755
+  file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
 
 - name: set up nginx
   template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/blog.conf owner=root group=root mode=644
