@@ -14,7 +14,7 @@
           tags: ['cgit', 'blog', 'nginx']}
       - { role: blog,
           ssl: true,
-          domain: "velox.vulpes.pw", 
+          domain: "velox.pw", 
           path: "/srv/http/blog", 
           tags: ['blog']}
       - { role: irc, 
@@ -29,4 +29,10 @@
           path: "/srv/git",
           domain: "git.velox.pw",
           tags: ['cgit', 'git']}
+      - { role: pics,
+          ssl: true,
+          path: "/srv/pics",
+          ssh_key: "fox.pub",
+          domain: "pics.velox.pw",
+          tags: ['pics']}
 

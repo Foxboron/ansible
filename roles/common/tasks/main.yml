@@ -4,7 +4,7 @@
   timezone: name=Europe/Oslo
 
 - name: install default packages
-  package: name=vim,htop,irssi,tmux,mosh,borg state=present
+  package: name=vim,htop,irssi,tmux,mosh state=present
 
 - name: create users
   user:
