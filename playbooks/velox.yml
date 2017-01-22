@@ -11,8 +11,9 @@
           letsencrypt_validation_dir: "/srv/http/letsencrypt",
           letsencrypt_config_dir: "/etc/nginx/letsencrypt",
           domains: [".velox.pw",".vulpes.pw"],
-          tags: ['nginx']}
+          tags: ['cgit', 'blog', 'nginx']}
       - { role: blog,
+          ssl: true,
           domain: "velox.vulpes.pw", 
           path: "/srv/http/blog", 
           tags: ['blog']}

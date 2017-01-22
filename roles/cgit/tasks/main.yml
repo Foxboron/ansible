@@ -4,7 +4,7 @@
 
 - name: append git group to www-data 
   user:
-    name: www-data 
+    name: "{{ http_user_group[0] }}"
     groups: git 
     append: yes
 
@@ -14,10 +14,11 @@
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
 
-- include: ../tasks/ssl.yml
+  # - include: ../tasks/ssl.yml
 
 - name: install nginx file
   template: src=../templates/nginx.d.conf.j2 dest=/etc/nginx/nginx.d/cgit.conf owner=root group=root mode=0644
   notify: 
+    - add ssl
     - restart nginx
     - restart fcgiwrap
