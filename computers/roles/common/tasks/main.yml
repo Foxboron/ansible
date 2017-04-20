@@ -1,0 +1,44 @@
+---
+
+- name: set timezone to Europe/Oslo
+  timezone: name=Europe/Oslo
+
+- locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: create user
+  user:
+      name: fox
+      state: present
+      groups: wheel
+
+- name: install default packages
+  package: name={{ item }} state=present
+  with_items: "{{ core_packages }}"
+
+
+- name: create git packages
+  become_user: fox
+  become: true
+  file: state=directory dest=AUR owner=fox group=fox mode=0755
+
+- name: git clone AUR packages
+  become_user: fox
+  become: true
+  git:
+    repo: https://aur.archlinux.org/{{ item }}.git
+    dest: ./AUR/{{ item }}
+  with_items: "{{ aur_packages }}"
+
+- name: make and install AUR packages
+  become_user: fox
+  become: true
+  shell: /usr/bin/makepkg -sic --noconfirm
+  args:
+    chdir: /home/fox/AUR/{{ item }}
+    executable: /bin/zsh
+  environment:
+    PATH: '/usr/bin/core_perl/:{{ ansible_env.PATH }}'
+  with_items: "{{ aur_packages }}"
+
