@@ -1,0 +1,17 @@
+---
+
+- name: create users
+  user:
+      name: "{{ item.key }}"
+      group: "{{ item.key }}"
+      state: present
+  with_dict: "{{ users }}"
+
+- name: add public keys
+  authorized_key:
+    user: "{{ item.key }}"
+    key: "{{ lookup('file', '../pubkeys/' + item.value.ssh_key) }}"
+    manage_dir: yes
+    state: present
+    exclusive: yes
+  with_dict: "{{ users }}"

@@ -1,0 +1,21 @@
+---
+
+- name: install borg
+  package: name=borgbackup state=present
+
+- name: create borg user
+  user: home="{{ backup_dir }}" name=borg
+
+- name: create borg user home
+  file: path="{{ backup_dir }}" state=directory owner=borg group=borg mode=0700
+
+- name: create the root backup directory at {{ backup_dir }}
+  file: path="{{ backup_dir }}/backup" state=directory owner=borg group=borg mode=0700
+
+- name: allow certain clients to connect
+  authorized_key:
+    user=borg
+    key="{{ lookup('file', '../pubkeys/' + item) }}"
+    manage_dir=yes
+    key_options="command=\"/usr/bin/borg serve --restrict-to-path {{ backup_dir }}/backup\",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc"
+  with_items: "{{ backup_keys }}"

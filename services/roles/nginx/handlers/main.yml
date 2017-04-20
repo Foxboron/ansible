@@ -1,0 +1,17 @@
+---
+
+
+- name: daemon reload
+  command: systemctl daemon-reload
+
+- name: add ssl
+  command: /usr/bin/add_san_domain {{ domain }}
+
+- name: run letsencrypt 
+  command: systemctl start letsencrypt 
+
+- name: restart nginx
+  service: name=nginx state=restarted
+
+- name: reload nginx
+  service: name=nginx state=reloaded

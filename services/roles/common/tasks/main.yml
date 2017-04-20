@@ -1,0 +1,24 @@
+---
+
+- name: set timezone to Europe/Oslo
+  timezone: name=Europe/Oslo
+
+- name: install default packages
+  package: name=vim,htop,irssi,tmux,mosh state=present
+
+- name: create users
+  user:
+      name: "{{ item.key }}"
+      state: present
+  with_dict: "{{ users }}"
+
+- name: configure ssh keys
+  authorized_key:
+    user: "{{ item.key }}"
+    key: "{{ lookup('file', '../pubkeys/' + item.value.ssh_key) }}"
+    manage_dir: yes
+    state: present
+    exclusive: yes
+  with_dict: "{{ users }}"
+
+

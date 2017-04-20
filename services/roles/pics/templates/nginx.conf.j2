@@ -1,0 +1,11 @@
+               
+    location / {
+        root {{ path }}/public;
+    }
+
+    location /private {
+        auth_basic "Familiebilder";
+        auth_basic_user_file {{ path }}/htpasswd;
+        root {{ path }};
+    }
+

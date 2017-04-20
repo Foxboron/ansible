@@ -1,0 +1,26 @@
+worker_processes  auto;
+
+events {
+    worker_connections  1024;
+}
+
+#error_log syslog:server=unix:/dev/log,nohostname info;
+
+user {{ http_user_group[0] }} {{ http_user_group[1] }};
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+    client_max_body_size 16M;
+
+    index  index.php index.html index.htm;
+
+    #access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http;
+
+    include snippets/sslsettings.conf;
+
+    include nginx.d/*.conf;
+}

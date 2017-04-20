@@ -1,0 +1,13 @@
+---
+letsencrypt_certs: "/etc/nginx/certs"
+letsencrypt_validation_dir: "/srv/http/letsencrypt"
+letsencrypt_config_dir: "/etc/nginx/letsencrypt"
+
+http_user_group: ["www-data", "www-data"]
+
+backup_dir: "/srv/backup"
+
+backup_key: "fox.pub"
+
+
+

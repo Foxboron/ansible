@@ -1,0 +1,28 @@
+---
+
+- name: make repo user
+  user: name=repo shell=/bin/bash home={{ path }} createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=repo group=repo path="{{ path }}"
+
+- name: configure ssh keys
+  authorized_key:
+    user: repo
+    key: "{{ lookup('file', '../pubkeys/' + item) }}"
+    manage_dir: yes
+    state: present
+  with_items: "{{ keys }}"
+
+
+- include: ../tasks/ssl.yml
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
+
+- name: set up nginx
+  template: src=../templates/nginx.d.conf.j2 dest=/etc/nginx/nginx.d/repo.conf owner=root group=root mode=644
+  notify:
+    - restart nginx
+
+

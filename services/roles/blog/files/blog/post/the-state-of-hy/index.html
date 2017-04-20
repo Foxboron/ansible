@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>  </title>
+		<title>  </title>
+		<title>  </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+        <link rel="stylesheet" href="https://velox.pw/css/syntax.css">
+        
+        
+    	<link href="https://velox.pw/css/bootstrap.min.css" rel="stylesheet">
+
+        
+        <link rel="stylesheet" href="https://velox.pw/css/main.css">
+
+    </head>
+    <body>
+
+		<div class="container">
+
+
+			
+			<div class="col-sm-3">
+				<h1>The Forest</h1>
+				<img id="about" src="https://velox.pw/img/logo.jpg" height="75px" width="75px" /><br />	
+
+				<strong>Navigation</strong><br />
+				<a href="/">home</a>
+						 
+							<a class="about" href="">  </a><br /> 
+
+							<a class="about" href="https://twitter.com/MortenLinderud"> Twitter </a>
+						 
+							<a class="about" href="">  </a><br /> 
+
+							<a class="about" href="https://github.com/Foxboron"> Github </a>
+						 
+							<a class="about" href="">  </a><br /> 
+
+							<a class="about" href="mailto:mcfoxax@gmail.com"> email </a>
+						 
+							<a class="about" href="">  </a><br /> 
+
+							<a class="about" href="http://pgp.velox.pw"> PGP </a>
+						 
+							<a class="about" href="">  </a><br /> 
+
+							<a class="about" href="https://keybase.io/fox"> Keybase </a>
+						 
+							<a class="about" href="">  </a><br /> 
+
+							<a class="about" href="https://velox.pw/feed.xml"> RSS </a>
+						
+				</br>
+				
+				<div id="about">
+					<strong>About</strong><br />
+					Internet dweller. Programming in Python and Clojure. Hy developer. Interested in encryption and Tor.
+				</div>
+			</div>
+
+			<div class="col-sm-8 col-offset-1">
+				<h1>The State of Hy</h1>
+				<span class="time">17 Jan 2014</span>
+
+				<div class="content">
+					<div class="post">
+
+<p><link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.url }}/feed.xml"></p>
+
+<p>So, with the recent hipster attitude of posting a &ldquo;State of *&rdquo; every year, I thought i&rsquo;d try and do it for something I have been contributing to for the past 6 months, Hy.</p>
+
+<h2 id="short-introduction:d6b75e04a2f632f61b31eaa12905f95b">Short introduction</h2>
+
+<p>Hy is a Lisp <del>leeching</del> living off the Python world. It compiles down to Python&rsquo;s AST and is completely bidirectional, you can import Hy into Python and vica versa seamlessly! It just works. Hy is also more portable then normal Python code. Any code you write with Hy can be run on Python 2.6, 2.7, 3.2, 3.3, even 3.4 and pypy! It&rsquo;s a rather young language but have hit a one year mark, but it does not mean Hy dosn&rsquo;t got neato features.</p>
+
+<p>Probably worth mentioning:</p>
+
+<ul>
+<li>Hy got 1350 downloads from pypi last month alone!</li>
+<li>36 different contributors in a year.
+
+<ul>
+<li>16 are now core developers with a substantial contribution too the language</li>
+</ul></li>
+<li>2 Lightning talks and 5 talks on different meetings/conferences</li>
+<li>tryHy got some attention in the past year. Still up and running; <a href="http://try-hy.appspot.com/">http://try-hy.appspot.com/</a></li>
+</ul>
+
+<h2 id="speed:d6b75e04a2f632f61b31eaa12905f95b">Speed</h2>
+
+<p>About a year ago paultag (our supreme BDFL) posted a gist comparing Hy with several Python versions, pypy and clojure-py. Just to celebrate the fact that Hy is one year old, I decided to do the same. clojure-py was skipped this year as the project is dead as far as I know, thus nothing have changed on that part.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Python 2.6</th>
+<th>Python 2.7</th>
+<th>Python 3.2</th>
+<th>Python 3.3</th>
+<th>Python 3.4</th>
+<th>Pypy</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Python</td>
+<td>8.25</td>
+<td>8.76</td>
+<td>13.72</td>
+<td>14.14</td>
+<td>9.84</td>
+<td>0.90</td>
+</tr>
+
+<tr>
+<td>Hy</td>
+<td>14.20</td>
+<td>14.68</td>
+<td>15.06</td>
+<td>15.06</td>
+<td>10.51</td>
+<td>3.81</td>
+</tr>
+</tbody>
+</table>
+
+<p>As you can see, Python 3.4 is actually the fastest version for running Hy, and we got no clue why! Pypy is still taking time, and we also got no clue why. Help on that front is appreciated.</p>
+
+<p>Original post: <a href="https://gist.github.com/paultag/4365555">https://gist.github.com/paultag/4365555</a></p>
+
+<h2 id="macros:d6b75e04a2f632f61b31eaa12905f95b">Macros</h2>
+
+<p>Hy got fullfledged macros. What are macros? Its those spells Lisp evangelists talk about that you don&rsquo;t understand. Basically, it allows you to alter code with code itself. Thus code and data in Lisp have blurred lines, making Lisp the awesomeness it is.
+Macros are also coupled with quote, unquote, splicing and gensyms for making your life easier.
+ref: <a href="http://docs.hylang.org/en/latest/language/internals.html#hy-macros">http://docs.hylang.org/en/latest/language/internals.html#hy-macros</a></p>
+
+<h2 id="reader-macros:d6b75e04a2f632f61b31eaa12905f95b">Reader Macros</h2>
+
+<p>Hy also recently got reader macros! So you can now have neato ways of altering the syntax as you go!</p>
+
+<pre><code class="language-clojure">=&gt; (defreader ^ [expr] (print expr))
+=&gt; #^(1 2 3 4)
+(1 2 3 4)
+=&gt; #^&quot;Hello&quot;
+&quot;Hello&quot;
+=&gt; #^1+2+3+4+3+2
+1+2+3+4+3+2
+</code></pre>
+
+<p>What about a literal for tuples? Hy dosn&rsquo;t got that!</p>
+
+<pre><code class="language-clojure">=&gt; (defreader t [expr] `(, ~@expr))
+=&gt; #t(1 2 3)
+(1, 2, 3)
+</code></pre>
+
+<p>I should note that because of bad testing (or me), reader macros is currently lacking a few features in 0.9.12, but that will be solved in the upcoming release!
+ref: <a href="http://docs.hylang.org/en/latest/language/readermacros.html">http://docs.hylang.org/en/latest/language/readermacros.html</a></p>
+
+<h2 id="error-handling:d6b75e04a2f632f61b31eaa12905f95b">Error Handling</h2>
+
+<p>We went Extreme Makeover, Nerd Edition.
+Before:
+<img src="http://i.imgur.com/JmHLkll.png"/>
+After:
+<img alt="" src="http://i.imgur.com/k3jM0LD.png" />
+You can now use Hy without getting long unreadable traceback blown in your face.
+Obviously with its shortcomings:</p>
+
+<p>{% highlight clojure %}
+=&gt; (map)
+Traceback (most recent call last):
+File &ldquo;<input>&rdquo;, line 1, in
+TypeError: map() must have at least two arguments.
+{% endhighlight %}
+Hy got no way of currently interferring of Python&rsquo;s error handling, so the new error message are limited, but damn nice!</p>
+
+<h2 id="tco-or-just-loop-and-recur-it:d6b75e04a2f632f61b31eaa12905f95b">TCO&hellip;or just loop and recur it!</h2>
+
+<p>Quite recently Hy got a implementation regarding loop/recur. loop/recur partly solves the problem of having no TCO. It thrives in Clojure because of a limitation in the JVM, and hopefully it will be great addition to Hy!</p>
+
+<p>It is currently only in master, but will be in Hy for 0.9.13.</p>
+
+<p>{% highlight clojure %}
+(require hy.contrib.loop)</p>
+
+<p>(defn factorial <a href="loop [[i n] [acc 1]]
+        (if (zero? i">n</a>
+          acc
+          (recur (dec i) (* acc i)))))</p>
+
+<p>(factorial 1000)
+;=&gt; 402387260077093773543702433923003985719374864210714632543799910429938512398629020592044208486969404800479988610197196058631666872994808558901323829669944590997424504087073759918823627727188732519779505950995276120874975462497043601418278094646496291056393887437886487337119181045825783647849977012476632889835955735432513185323958463075557409114262417474349347553428646576611667797396668820291207379143853719588249808126867838374559731746136085379534524221586593201928090878297308431392844403281231558611036976801357304216168747609675871348312025478589320767169132448426236131412508780208000261683151027341827977704784635868170164365024153691398281264810213092761244896359928705114964975419909342221566832572080821333186116811553615836546984046708975602900950537616475847728421889679646244945160765353408198901385442487984959953319101723355556602139450399736280750137837615307127761926849034352625200015888535147331611702103968175921510907788019393178114194545257223865541461062892187960223838971476088506276862967146674697562911234082439208160153780889893964518263243671616762179168909779911903754031274622289988005195444414282012187361745992642956581746628302955570299024324153181617210465832036786906117260158783520751516284225540265170483304226143974286933061690897968482590125458327168226458066526769958652682272807075781391858178889652208164348344825993266043367660176999612831860788386150279465955131156552036093988180612138558600301435694527224206344631797460594682573103790084024432438465657245014402821885252470935190620929023136493273497565513958720559654228749774011413346962715422845862377387538230483865688976461927383814900140767310446640259899490222221765904339901886018566526485061799702356193897017860040811889729918311021171229845901641921068884387121855646124960798722908519296819372388642614839657382291123125024186649353143970137428531926649875337218940694281434118520158014123344828015051399694290153483077644569099073152433278288269864602789864321139083506217095002597389863554277196742822248757586765752344220207573630569498825087968928162753848863396909959826280956121450994871701244516461260379029309120889086942028510640182154399457156805941872748998094254742173582401063677404595741785160829230135358081840096996372524230560855903700624271243416909004153690105933983835777939410970027753472000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000L
+{% endhighlight %}</p>
+
+<h2 id="astor:d6b75e04a2f632f61b31eaa12905f95b">Astor</h2>
+
+<p>One of our core devs took over the maintainer role for astor. Astor is a library designed to easily read/write Python AST. Our primary usage of the library is inside <code>hy2py</code>, where we use it to generate python code from the AST generated by Hy. A neat example is running <code>hy --spy</code>, it hands back the python equivalent of the Hy code you run.</p>
+
+<p>{% highlight clojure %}
+=&gt; (defn hello <a href="print &quot;Hello&quot; name">name</a>)
+def hello(name):
+    return print(&lsquo;Hello&rsquo;, name)</p>
+
+<p>=&gt; (hello &ldquo;Hypsters!&rdquo;)
+hello(&lsquo;Hypsters!&rsquo;)
+Hello Hypsters!
+{% endhighlight %}</p>
+
+<p>Check it out!<br />
+<a href="https://github.com/berkerpeksag/astor">https://github.com/berkerpeksag/astor</a></p>
+
+<h2 id="future:d6b75e04a2f632f61b31eaa12905f95b">Future</h2>
+
+<p>So whats next in store for Hy, except world dominance in the land of Python?</p>
+
+<p>algernon is currently implementing a miniKanren in Hy. It&rsquo;s a neat project and shows just how far Hy can be taken!<br />
+<a href="https://github.com/algernon/adderall">https://github.com/algernon/adderall</a>
+<a href="http://minikanren.org/">http://minikanren.org/</a></p>
+
+<p>There will be a Hy talk on PyCon2014 by Paul Tagliamonte (Hy&rsquo;s creator and our supreme BDFL). Worth checking out if your interested in Pythons AST and how Hy works.
+We are planning on porting Clojure&rsquo;s nrepl project for Hy, so we can <del>leech off</del> utilize all the amazing plugings created for nrepl.
+There are small bugs around the place but Hy is coming along. Who knows what the future might bring? Join the Hyve!</p>
+
+<h2 id="talks-sources:d6b75e04a2f632f61b31eaa12905f95b">Talks &amp; Sources</h2>
+
+<p>Lightning talk on PyCon 2013:<br />
+<a href="http://www.youtube.com/watch?feature=player_detailpage&amp;v=1vui-LupKJI#t=975">http://www.youtube.com/watch?feature=player_detailpage&amp;v=1vui-LupKJI#t=975</a></p>
+
+<p>Boston Python Meetup (January 2013)<br />
+<a href="http://www.youtube.com/watch?v=ulekCWvDFVI">http://www.youtube.com/watch?v=ulekCWvDFVI</a></p>
+
+<p>PyCon Canada 2013<br />
+<a href="http://www.youtube.com/watch?v=n8i2f6X0SkU">http://www.youtube.com/watch?v=n8i2f6X0SkU</a></p>
+
+<p>PyCon France 2013<br />
+(Warning: French)<br />
+<a href="http://www.youtube.com/watch?v=ah9fwabLD70">http://www.youtube.com/watch?v=ah9fwabLD70</a></p>
+
+<p>PyCon Spain 2013<br />
+(Warning: Spanish)<br />
+<a href="http://www.youtube.com/watch?v=dUBmaTZ8tpA">http://www.youtube.com/watch?v=dUBmaTZ8tpA</a></p>
+
+<p>PyCon 2014
+<a href="https://www.youtube.com/watch?v=AmMaN1AokTI">https://www.youtube.com/watch?v=AmMaN1AokTI</a></p>
+
+<p>EuroClojure 2014
+<a href="http://vimeo.com/100977462">http://vimeo.com/100977462</a></p>
+
+<p>Python User Group talk by Benjamin Vulpes
+<a href="https://www.youtube.com/watch?v=v1aLxXw7bfw">https://www.youtube.com/watch?v=v1aLxXw7bfw</a></p>
+
+<p>Chicago Python User Group talk by Christopher Webber<br />
+<a href="http://www.youtube.com/watch?v=SB9TWabor1k">http://www.youtube.com/watch?v=SB9TWabor1k</a></p>
+
+<p>Blog post explaining the basics of Hy<br />
+<a href="http://engineersjourney.wordpress.com/2013/11/27/programming-can-be-fun-with-hy/">http://engineersjourney.wordpress.com/2013/11/27/programming-can-be-fun-with-hy/</a></p>
+
+<p>learnxinyminutes post about hy written by theanalyst.<br />
+<a href="http://learnxinyminutes.com/docs/hy/">http://learnxinyminutes.com/docs/hy/</a></p>
+
+<p>This concludes the end of my post, and hopefully I didn&rsquo;t ruin all your future hope for Hy, kinda like this:
+<img src="http://i.imgur.com/9KXUOow.gif" alt="" /></p>
+
+<p>Follow us on twitter! <a href="https://twitter.com/hylang">https://twitter.com/hylang</a>
+There is also a list of Hy developers: <a href="https://twitter.com/paultag/lists/hypsters">https://twitter.com/paultag/lists/hypsters</a></p>
+
+<p><strong>Hy Society</strong><br />
+<a href="https://github.com/hylang/hy">https://github.com/hylang/hy</a><br />
+<a href="http://docs.hylang.org/en/latest/">http://docs.hylang.org/en/latest/</a></p>
+</div>
+				</div>
+			</div>
+
+<footer>
+        The Forest - <a href="https://www.github.com/Foxboron">https://www.github.com/Foxboron</a>
+</footer>
+			</div>
+		
+		</div>
+
+	
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://velox.pw/js/bootstrap.min.js"></script>
+    </body>
+</html>
+

@@ -1,0 +1,27 @@
+
+server {
+    listen 80;
+    server_name {{ domain }};
+
+    keepalive_timeout 70;
+    access_log /var/log/nginx/{{ domain }}/access.log;
+    error_log /var/log/nginx/{{ domain }}/error.log;
+    include snippets/letsencrypt.conf;
+
+{% if ssl%}
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}
+server {
+    listen 443 ssl;
+    server_name {{ domain }};
+
+    keepalive_timeout 70;
+    access_log /var/log/nginx/{{ domain }}/access.log;
+    error_log /var/log/nginx/{{ domain }}/error.log;
+
+    include snippets/sslsettings.conf;
+{% endif %}
+    {% include "templates/nginx.conf.j2" %}
+}

@@ -1,0 +1,44 @@
+---
+- name: install cgit fcgiwrap and cgit compile deps
+  package: name=cgit,fcgiwrap,libssl-dev,zlib1g-dev state=present
+
+- name: make cgit user
+  user: name=cgit shell=/bin/false home="{{ path }}" createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=cgit group=cgit path="{{ path }}"
+
+- name: append groups to www-data 
+  user:
+    name: "{{ http_user_group[0] }}"
+    groups: "{{ item }}" 
+    append: yes
+  with_items:
+      - cgit
+      - git
+  notify:
+      - restart nginx
+      - restart fcgiwrap
+
+- name: checkout cgit
+  become_user: cgit
+  become: true
+  git:
+    repo: git://git.zx2c4.com/cgit
+    dest: cgit
+    force: yes
+
+- name: install cgitrc
+  template: src=cgitrc dest=/etc/cgitrc owner=root group=root mode=0644
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
+
+- include: ../tasks/ssl.yml
+
+- name: install nginx file
+  template: src=../templates/nginx.d.conf.j2 dest=/etc/nginx/nginx.d/cgit.conf owner=root group=root mode=0644
+  notify: 
+    - add ssl
+    - restart nginx
+    - restart fcgiwrap

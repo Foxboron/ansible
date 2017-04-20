@@ -1,0 +1,17 @@
+server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    root         /srv/http;
+
+    server_name
+    {% for domain in domains %}
+        {{ domain }}
+    {% endfor %}
+    ;
+
+    include snippets/letsencrypt.conf;
+
+    location / {
+        return 404;
+    }
+}

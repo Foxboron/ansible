@@ -1,0 +1,88 @@
+---
+- name: install packages
+  package: name=make,curl,apache2-utils state=present
+
+- name: install minify packages
+  package: name=python3-jsmin, python3-rcssmin state=present
+
+- name: make pics user
+  user: name=pics shell=/bin/bash home={{ path }} createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=pics group=pics path="{{ path }}"
+
+- name: append pics group to www-data 
+  user:
+    name: "{{ http_user_group[0] }}"
+    groups: pics 
+    append: yes
+
+- name: configure ssh keys
+  authorized_key:
+    user: pics
+    key: "{{ lookup('file', '../pubkeys/' + ssh_key) }}"
+    manage_dir: yes
+    state: present
+    exclusive: yes
+
+
+- name: checkout photofloat
+  become_user: pics
+  become: true
+  git:
+    repo: git://github.com/Foxboron/Photofloat.git
+    dest: ./Photofloat
+    force: yes
+
+- name: delete googletracker
+  file: path={{ path }}/Photofloat/web/js/999-googletracker.js state=absent
+
+# - name: minify css
+#   become_user: pics
+#   become: true
+#   command: bash css-minify.sh
+#   args:
+#       chdir: "{{ path }}/Photofloat/web/css"
+
+# - name: minify js
+#   become_user: pics
+#   become: true
+#   command: bash js-minify.sh
+#   args:
+#       chdir: "{{ path }}/Photofloat/web/js"
+
+- name: create albums and cache
+  file: path={{ path }}/{{ item }} state=directory owner=pics group=pics mode=750 
+  with_items:
+      - albums
+
+- name: symlink files private
+  file: src={{ path }}/{{ item.key }} dest={{ path }}/private/{{ item.value }} state=link
+  with_dict:
+      "Photofloat/web/css": "css"
+      "Photofloat/web/js": "js"
+      "Photofloat/web/fonts": "fonts"
+      "Photofloat/web/img": "img"
+      "Photofloat/web/index.html": "index.html"
+
+- name: symlink files public
+  file: src={{ path }}/{{ item.key }} dest={{ path }}/public/{{ item.value }} state=link
+  with_dict:
+      "Photofloat/web/css": "css"
+      "Photofloat/web/js": "js"
+      "Photofloat/web/fonts": "fonts"
+      "Photofloat/web/img": "img"
+      "Photofloat/web/index.html": "index.html"
+
+- name: create htpasswd file
+  file: path={{ path }}/htpasswd state=touch owner=pics group=pics mode=755
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
+
+- include: "../tasks/ssl.yml"
+
+- name: set up nginx
+  template: src=../templates/nginx.d.conf.j2 dest=/etc/nginx/nginx.d/pics.conf owner=root group=root mode=644
+  notify:
+    - restart nginx

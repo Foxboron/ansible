@@ -1,0 +1,4 @@
+users:
+    fox:
+        name: "Fox"
+        ssh_key: fox.pub
