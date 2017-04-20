@@ -1,7 +1,0 @@
----
-
-- name: add domain into SAN
-  command: /usr/bin/add_san_domain {{ domain }}
-  when: ssl
-  notify:
-      - run letsencrypt
