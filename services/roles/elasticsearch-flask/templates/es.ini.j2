@@ -1,0 +1,16 @@
+[uwsgi]
+plugins=python3
+chdir={{ es_dir }}
+#module=run
+wsgi-file=main.py
+callable=app
+socket=/run/uwsgi/es.sock
+chmod-socket=660
+processes=4
+threads=2
+master=true
+uid=es
+gid=www-data
+thunder-lock = true
+daemonize=/var/log/uwsgi/es.log
+stats=/run/uwsgi/es-stats.sock

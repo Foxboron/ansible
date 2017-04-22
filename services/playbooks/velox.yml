@@ -47,3 +47,12 @@
           domain: "repos.buelinux.no",
           keys: ["fox.pub", "theia.pub"],
           tags: ['repo']}
+
+      - { role: uwsgi,
+          tags: ['uwsgi']}
+      
+      - { role: elasticsearch-flask,
+          domain: "es.velox.pw",
+          ssl: true,
+          es_dir: "/srv/es",
+          tags: ['es']}

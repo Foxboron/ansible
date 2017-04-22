@@ -1,0 +1,24 @@
+---
+
+- name: install uwsgi
+  package: name=uwsgi-emperor,uwsgi-plugin-python3 state=present
+
+- name: make uwsgi user
+  user: name=uwsgi shell=/bin/false home=/ createhome=no
+
+- name: configure uwsgi
+  template: src=emperor.ini.j2 dest=/etc/uwsgi-emperor/emperor.ini owner=root group=root mode=0644
+  notify:
+    - restart uwsgi-emperor 
+
+- name: vassals directory
+  file: state=directory path=/etc/uwsgi-emperor/vassals owner=root group=root mode=0755
+
+- name: vassals directory
+  file: state=directory path=/run/uwsgi owner=root group=root mode=0755
+
+- name: create default uwsgi log directory
+  file: state=directory path=/var/log/uwsgi owner=uwsgi group=www-data mode=0770
+
+- name: enable and start emperor.uwsgi.service
+  service: name=uwsgi-emperor enabled=yes state=started
