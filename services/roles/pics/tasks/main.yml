@@ -1,9 +1,10 @@
 ---
+
 - name: install packages
   package: name=make,curl,apache2-utils state=present
 
 - name: install minify packages
-  package: name=python3-jsmin, python3-rcssmin state=present
+  package: name=python3-jsmin,python3-rcssmin state=present
 
 - name: make pics user
   user: name=pics shell=/bin/bash home={{ path }} createhome=no
@@ -80,7 +81,9 @@
 - name: make nginx log dir
   file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
 
-- include: "../tasks/ssl.yml"
+- name: install letsencrypt cert
+  command: certbot certonly --rsa-key-size 4096 --renew-by-default --webroot -w /var/www/challenges -d {{ domain }} creates=/etc/letsencrypt/live/{{domain}}
+
 
 - name: set up nginx
   template: src=../templates/nginx.d.conf.j2 dest=/etc/nginx/nginx.d/pics.conf owner=root group=root mode=644

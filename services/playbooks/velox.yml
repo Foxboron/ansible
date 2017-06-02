@@ -6,9 +6,12 @@
       git_path: "/srv/git"
   roles:
       - { role: common, tags: ['common']}
+
       - { role: nginx,
-          domains: [".velox.pw",".vulpes.pw"],
-          tags: ['blog', 'nginx']}
+          tags: ['nginx']}
+
+      - { role: letsencrypt,
+          tags: ['letsencrypt']}
 
       - { role: blog,
           ssl: true,
@@ -47,6 +50,12 @@
           domain: "repos.buelinux.no",
           keys: ["fox.pub", "theia.pub"],
           tags: ['repo']}
+
+      - { role: buildbot,
+          ssl: true,
+          path: "/srv/buildbot",
+          domain: "build.velox.pw",
+          tags: ['buildbot']}
 
       - { role: uwsgi,
           tags: ['uwsgi']}

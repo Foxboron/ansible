@@ -1,0 +1,8 @@
+[Unit]
+Description=Lets Encrypt provider
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew --rsa-key-size 4096
+ExecStartPost=/bin/systemctl reload nginx.service
+

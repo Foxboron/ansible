@@ -2,18 +2,15 @@
 
 - name: install nginx
   apt: name=nginx state=present
+  #apt: name=nginx,php5-fpm state=present
 
 - name: configure nginx
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
+  notify:
+      - restart nginx
 
 - name: snippets directory
   file: state=directory path=/etc/nginx/snippets owner=root group=root mode=0755
-
-- name: copy snippets
-  template: src={{ item }} dest=/etc/nginx/snippets owner=root group=root mode=0644
-  with_items:
-    - letsencrypt.conf
-    - sslsettings.conf
 
 - name: create nginx.d directory
   file: state=directory path=/etc/nginx/nginx.d owner=root group=root mode=0755
@@ -21,41 +18,10 @@
 - name: create default nginx log directory
   file: state=directory path=/var/log/nginx/default owner=www-data group=adm mode=0750
 
-- name: create unique DH group
-  command: openssl dhparam -out /etc/ssl/dhparams.pem 2048 creates=/etc/ssl/dhparams.pem
-
-- name: create directory to store validation stuff in
-  file: owner=www-data group=www-data mode=0755 path={{ letsencrypt_validation_dir }}/.well-known/acme-challenge state=directory
-
-- name: create /srv/http 
-  file: owner=www-data group=www-data mode=0755 path=/srv/http state=directory
-
-# - name: install catch-all config 
-#   template: src=nginx-letsencrypt-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-letsencrypt-vhost.conf owner=root group=root mode=0644
-
-- name: install inventory_hostname vhost
-  template: src=nginx-hostname-vhost.conf.j2 dest=/etc/nginx/nginx.d/nginx-hostname-vhost.conf owner=root group=root mode=0644
-
-
-- name: create nginx letsencrypt directory 
-  file: owner=root group=root mode=0750 path={{ letsencrypt_config_dir }} state=directory
-
-- name: create letsencrypt certs directory
-  file: owner=root group=root mode=0750 path={{ letsencrypt_certs }} state=directory
-
-- name: install letsencrypt files
-  copy: src=letsencrypt/ dest={{ letsencrypt_config_dir }} owner=root group=root mode=0744
-
-- name: install letsencrypt service
-  template: src="letsencrypt.service.j2" dest="/etc/systemd/system/letsencrypt.service" owner=root group=root mode=0644
-
-- name: install letsencrypt timer 
-  copy: src="letsencrypt.timer" dest="/etc/systemd/system/letsencrypt.timer" owner=root group=root mode=0644
-  notify:
-      - daemon reload
-
-- name: install letsencrypt SAN script 
-  template: src="add_san_domain.j2" dest="/usr/bin/add_san_domain" owner=root group=root mode=0755
+# - name: install php5-fpm config
+#   template: src=php-fpm.conf.j2 dest=/etc/php5/fpm owner=root group=root mode=0644
+#   notify:
+#       - restart php5-fpm
 
 - name: enable nginx
   service: name=nginx enabled=yes

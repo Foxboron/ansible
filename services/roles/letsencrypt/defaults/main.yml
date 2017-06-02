@@ -1,0 +1,4 @@
+---
+
+letsencrypt_config_dir: '/var/www/challenges'
+letsencrypt_validation_dir: '/var/www/challenges'

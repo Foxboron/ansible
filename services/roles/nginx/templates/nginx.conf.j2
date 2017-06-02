@@ -6,8 +6,6 @@ events {
 
 #error_log syslog:server=unix:/dev/log,nohostname info;
 
-user {{ http_user_group[0] }} {{ http_user_group[1] }};
-
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -19,8 +17,6 @@ http {
     index  index.php index.html index.htm;
 
     #access_log syslog:server=unix:/dev/log,nohostname,tag=nginx_http;
-
-    include snippets/sslsettings.conf;
 
     include nginx.d/*.conf;
 }
