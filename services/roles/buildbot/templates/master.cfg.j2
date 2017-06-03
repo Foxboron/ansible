@@ -1,0 +1,123 @@
+# -*- python -*-
+# ex: set filetype=python:
+
+
+
+from buildbot.process import remotecommand
+from buildbot.plugins import *
+from buildbot.plugins import util, steps
+from buildbot.process import buildstep, logobserver
+from twisted.internet import defer
+
+
+# This is a sample buildmaster config file. It must be installed as
+# 'master.cfg' in your buildmaster's base directory.
+
+# This is the dictionary that the buildmaster pays attention to. We also use
+# a shorter alias to save typing.
+c = BuildmasterConfig = {}
+
+####### WORKERS
+
+# The 'workers' list defines the set of recognized workers. Each element is
+# a Worker object, specifying a unique worker name and password.  The same
+# worker name and password must be configured on the worker.
+# c['workers'] = [worker.Worker("example-worker", "pass", max_builds=30),
+#                 worker.Worker("example-worker2", "pass", max_builds=30)]
+
+c['workers'] = [worker.LocalWorker('bot1')]
+# 'protocols' contains information about protocols which master will use for
+# communicating with workers. You must define at least 'port' option that workers
+# could connect to your master with this protocol.
+# 'port' must match the value configured into the workers (with their
+# --master option)
+c['protocols'] = {'pb': {'port': 9989}}
+
+####### CHANGESOURCES
+
+# the 'change_source' setting tells the buildmaster how it should find out
+# about source code changes.  Here we point to the buildbot clone of pyflakes.
+
+c['change_source'] = []
+c['change_source'].append(changes.GitPoller(
+        'git://github.com/Foxboron/PKGBUILDS.git',
+        workdir='gitpoller-workdir', branch='master',
+        pollinterval=300))
+
+####### SCHEDULERS
+
+# Configure the Schedulers, which decide how to react to incoming changes.  In this
+# case, just kick off a 'runtests' build
+
+c['schedulers'] = []
+c['schedulers'].append(schedulers.SingleBranchScheduler(
+                            name="all",
+                            change_filter=util.ChangeFilter(branch='master'),
+                            treeStableTimer=None,
+                            builderNames=["unpack-packages"]))
+
+c['schedulers'].append(schedulers.ForceScheduler(
+                            name="force",
+                            builderNames=["unpack-packages"]))     
+
+c['schedulers'].append(schedulers.Triggerable(name="build", builderNames=["build-package"]))
+
+####### BUILDERS
+
+
+
+class TriggerWithPackageNames(steps.Trigger, buildstep.ShellMixin):
+
+    @defer.inlineCallbacks
+    def getSchedulersAndProperties(self):
+        sp = []
+        self.observer = logobserver.BufferLogObserver()
+        self.addLogObserver('stdio', self.observer)
+        cmd = yield self.makeRemoteShellCommand(command=["find", ".","-name","PKGBUILD"])
+        yield self.runCommand(cmd)
+
+        for i in self.observer.getStdout().split():
+            props = self.set_properties.copy()
+            props["virtual_builder_name"] = i.split("/")[1]
+            sp.append(["build", props])
+        return sp
+
+# The 'builders' list defines the Builders, which tell Buildbot how to perform a build:
+# what steps, and which workers can execute them.  Note that any particular build will
+# only take place on one worker.
+
+unpack_packages = util.BuildFactory()
+unpack_packages.addStep(steps.Git(repourl='git://github.com/Foxboron/PKGBUILDS.git', mode='incremental'))
+unpack_packages.addStep(TriggerWithPackageNames(schedulerNames=['build'], waitForFinish=True, updateSourceStamp=True))
+
+
+build_package = util.BuildFactory()
+build_package.addStep(steps.Git(repourl='git://github.com/Foxboron/PKGBUILDS.git', mode='incremental', haltOnFailure=True))
+build_package.addStep(steps.ShellCommand(command=["ls","-lah"], haltOnFailure=True))
+
+c['builders'] = []
+c['builders'].append(
+    util.BuilderConfig(name="unpack-packages",
+        #workernames=["example-worker", "example-worker2"],
+        workernames=["bot1"],
+      factory=unpack_packages))
+
+c['builders'].append(
+    util.BuilderConfig(name="build-package",
+        #workernames=["example-worker", "example-worker2"],
+        workernames=["bot1"],
+        factory=build_package))
+
+c['services'] = []
+
+c['title'] = "Foxboron Packages"
+c['titleURL'] = "https://build.velox.pw"
+
+c['buildbotURL'] = "http://localhost:8010/"
+
+c['www'] = dict(port=8010,
+                plugins=dict(waterfall_view={}, console_view={}))
+
+c['db'] = {
+    'db_url' : "sqlite:///state.sqlite",
+}

@@ -1,0 +1,12 @@
+---
+
+- name: reload buildbot
+  command: buildbot reconfig master
+  args:
+      chdir: "/srv/buildbot/"
+
+- name: restart buildbot
+  command: buildbot restart master
+  args:
+      chdir: "/srv/buildbot/"
+
