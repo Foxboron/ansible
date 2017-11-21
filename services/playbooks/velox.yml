@@ -65,3 +65,9 @@
           ssl: true,
           es_dir: "/srv/es",
           tags: ['es']}
+
+      - { role: archlinux.no,
+          domain: "archlinux.no",
+          ssl: true,
+          path: "/srv/archlinux.no",
+          tags: ['archlinux.no']}
