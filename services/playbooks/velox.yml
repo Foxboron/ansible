@@ -13,11 +13,22 @@
       - { role: letsencrypt,
           tags: ['letsencrypt']}
 
-      - { role: blog,
+      - { role: hugo,
           ssl: true,
+          hugo_user: blog,
+          hugo_repo: "https://github.com/foxboron/blog.git",
           domain: "velox.pw", 
           path: "/srv/http/blog", 
-          tags: ['blog']}
+          tags: ['hugo', 'blog']}
+
+
+      - { role: hugo,
+          ssl: true,
+          hugo_user: archlinux,
+          hugo_repo: "https://github.com/foxboron/archlinux.no.git",
+          domain: "archlinux.no",
+          path: "/srv/http/archlinux.no",
+          tags: ['hugo', 'archlinux.no']}
 
       - { role: irc, 
           domain: "irc.velox.pw", 
@@ -65,9 +76,3 @@
           ssl: true,
           es_dir: "/srv/es",
           tags: ['es']}
-
-      - { role: archlinux.no,
-          domain: "archlinux.no",
-          ssl: true,
-          path: "/srv/archlinux.no",
-          tags: ['archlinux.no']}
