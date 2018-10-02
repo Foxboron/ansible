@@ -1,0 +1,8 @@
+---
+
+wireguard_address: 10.200.100.1
+wireguard_forward: true
+wireguard_post: true
+wireguard_post_up: iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+wireguard_post_down: iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+wireguard_listen_port: 51820

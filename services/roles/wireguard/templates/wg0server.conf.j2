@@ -1,0 +1,17 @@
+[Interface]
+Address = {{wireguard_address}}/24
+{% if wireguard_post %}
+PostUp   = {{wireguard_post_up}}
+PostDown = {{wireguard_post_down}}
+{%endif%}
+PrivateKey = {{wireguard_private_key}}
+ListenPort = {{wireguard_listen_port}}
+
+{%for key,values in wireguard_peers.items()%}
+[Peer] # {{key}}
+PublicKey = {{values.public_key}}
+PresharedKey = {{values.preshared_key}}
+AllowedIPs = {{values.allowed_ips}}/32
+
+{%endfor%}
+

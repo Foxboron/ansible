@@ -1,0 +1,4 @@
+---
+
+- name: reload wireguard
+  service: name=wg-qucik@wg0server state=reloaded

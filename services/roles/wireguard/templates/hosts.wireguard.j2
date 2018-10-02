@@ -1,0 +1,4 @@
+{{wireguard_address}}	{{ansible_hostname}}
+{%for key, values in wireguard_peers.items()%}
+{{values.allowed_ips}}	{{key}}
+{%endfor%}

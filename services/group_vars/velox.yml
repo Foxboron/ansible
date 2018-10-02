@@ -1,9 +1,15 @@
 ---
 http_user_group: ["www-data", "www-data"]
-
 backup_dir: "/srv/backup"
-
 backup_key: "fox.pub"
 
+wireguard_public_key: "{{lookup('passwordstore', 'wireguard/peer/velox/public_key')}}"
+wireguard_private_key: "{{lookup('passwordstore', 'wireguard/peer/velox/private_key')}}"
 
-
+wireguard_peers:
+    anathema:
+        allowed_ips: 10.200.100.2/32
+    phone:
+        allowed_ips: 10.200.100.3/32
+    nassen:
+        allowed_ips: 10.200.100.4/32

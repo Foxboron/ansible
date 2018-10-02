@@ -1,0 +1,10 @@
+[Match]
+Name=wg0
+
+[Network]
+Address={{wireguard_address}}
+DNS={{wireguard_dns}}
+
+[Route]
+Gateway={{wireguard_gateway}}
+Destination={{wireguard_route}}

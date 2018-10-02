@@ -1,0 +1,16 @@
+---
+
+wireguard_public_key: "{{lookup('passwordstore', 'wireguard/peer/nassen/public_key')}}"
+wireguard_private_key: "{{lookup('passwordstore', 'wireguard/peer/nassen/private_key')}}"
+wireguard_address: 10.200.100.4/32
+wireguard_dns: 10.200.100.1
+wireguard_gateway: 10.200.100.1
+wireguard_route: 10.200.100.0/24
+wireguard_post: false
+wireguard_forward: false
+wireguard_systemd: true
+
+wireguard_peers:
+    velox:
+        allowed_ips: 10.200.100.0/24
+

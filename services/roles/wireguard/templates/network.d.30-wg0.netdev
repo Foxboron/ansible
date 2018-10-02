@@ -1,0 +1,16 @@
+[NetDev]
+Name=wg0
+Kind=wireguard
+Description=Wireguard
+
+[WireGuard]
+PrivateKey={{wireguard_private_key}}
+LitenPort={{wireguard_listen_port}}
+
+{%for key,values in wireguard_peers.items()%}
+[WireGuardPeer] # {{key}}
+PublicKey = {{values.public_key}}
+PresharedKey = {{values.preshared_key}}
+{%if values.endpoint %}Endpoint = {{values.endpoint}}{%endif%}
+AllowedIPs = {{values.route}}
+PersistentKeepalive=25
