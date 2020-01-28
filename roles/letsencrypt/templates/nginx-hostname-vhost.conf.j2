@@ -1,0 +1,15 @@
+server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    server_name  _;
+
+    location /.well-known/acme-challenge {
+        root {{ letsencrypt_validation_dir }};
+        default_type "text/plain";
+        try_files $uri =404;
+    }
+
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}

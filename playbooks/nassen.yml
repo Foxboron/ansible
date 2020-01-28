@@ -1,0 +1,9 @@
+---
+
+- name: setup nassen
+  hosts: nassen
+  roles:
+      - { role: common, tags: ['common']}
+      
+      - { role: wireguard,
+          tags: ['wireguard']}

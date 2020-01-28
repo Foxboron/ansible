@@ -1,0 +1,16 @@
+port={{dnsmasq_port}}
+conf-file=/usr/share/dnsmasq-base/trust-anchors.conf
+dnssec
+dnssec-check-unsigned
+listen-address={{dnsmasq_listen_address | join(',') }}
+bind-interfaces
+cache-size=10000
+resolv-file=/etc/resolv.dnsmasq
+domain-needed		# Drop queries with no domains
+bogus-priv		# Don't reply to the private ranges
+#no-resolv		# Don't read /etc/resolv.conf
+#no-poll			# Don't poll /etc/resolv.conf for changes
+strict-order		# Follow the order of the resolve servers
+clear-on-reload		# Clear the cache on reload
+no-negcache		# Don't remember negative hits
+addn-hosts=/etc/hosts.d

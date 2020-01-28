@@ -1,0 +1,47 @@
+---
+
+- name: install packages
+  package: name={{ item }} state=present
+  with_items:
+    - git
+    - python3
+    - python3-flask
+    - python3-elasticsearch
+
+
+- name: make es user
+  user: name=es shell=/bin/false home="{{ es_dir }}" createhome=no
+
+- name: fix home permissions
+  file: state=directory owner=es group=es path="{{ es_dir }}"
+
+- name: clone INFO381 repo
+  git: repo=https://github.com/foxboron/INFO381.git dest="{{ es_dir }}"
+  become: true
+  become_user: es 
+
+- name: deploy es
+  template: src=es.ini.j2 dest=/etc/uwsgi-emperor/vassals/es.ini owner=es group=www-data mode=0644
+
+- name: deploy new release
+  become: true
+  become_user: es 
+  file: path=/etc/uwsgi-emperor/vassals/es.ini state=touch
+  # when: release.changed
+  # register:
+  #     - restart uwsgi-emperor
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ domain }} state=directory owner=root group=root mode=0755
+
+- include: ../tasks/ssl.yml
+
+- name: set up nginx
+  template: src=../templates/nginx.d.conf.j2 dest=/etc/nginx/nginx.d/es.conf owner=root group=root mode=644
+  notify:
+    - reload nginx
+
+
+
+
+

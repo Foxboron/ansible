@@ -1,0 +1,33 @@
+---
+
+- name: install hugo
+  package: name=hugo state=present
+
+- name: make {{hugo_user}} user
+  user: name={{hugo_user}} shell=/bin/false home={{ path }} create_home=no
+
+- name: fix home permissions
+  file: state=directory owner={{hugo_user}} group={{hugo_user}} path="{{ path }}"
+
+- name: clone hugo repo
+  git: repo={{hugo_repo}} force=yes dest="{{ path }}/repo"
+  become: true
+  become_user: "{{hugo_user}}"
+
+- name: generate hugo site
+  command: hugo --cacheDir="{{path}}/.cache" --destination "{{path}}/public"
+  become: true 
+  become_user: "{{hugo_user}}"
+  args:
+    chdir: "{{path}}/repo"
+
+- name: install letsencrypt cert
+  command: certbot certonly --rsa-key-size 4096 --renew-by-default --webroot -w /var/www/challenges -d {{ domain }} creates=/etc/letsencrypt/live/{{domain}}
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ domain }} state=directory owner=www-data group=adm mode=755
+
+- name: set up nginx
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.d/{{domain}}.conf owner=root group=root mode=644
+  notify:
+    - restart nginx

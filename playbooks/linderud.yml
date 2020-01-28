@@ -1,0 +1,20 @@
+---
+
+- name: setup linderud.dev
+  hosts: linderud
+  roles:
+      - { role: common, tags: ['common']}
+
+      - { role: nginx,
+          tags: ['nginx']}
+
+      - { role: letsencrypt,
+          tags: ['letsencrypt']}
+
+      - { role: hugo,
+          ssl: true,
+          hugo_user: blog,
+          hugo_repo: "https://github.com/foxboron/blog.git",
+          domain: "blog.dedi.linderud.dev", 
+          path: "/srv/http/blog", 
+          tags: ['hugo', 'blog']}

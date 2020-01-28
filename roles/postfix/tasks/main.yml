@@ -1,0 +1,34 @@
+---
+
+- name: install postfix
+  pacman: name=postfix state=present
+
+- name: install template configs
+  template: src={{item}}.j2 dest=/etc/postfix/{{item}} owner=root group=root mode=0644
+  notify:
+    - reload postfix
+  with_items:
+    - main.cf
+    - master.cf
+    - aliases
+    - virtual
+  notify:
+    - restart postfix
+    - update aliases db
+    - update virtual db
+
+- name: create dhparam 2048
+  command: openssl dhparam -out /etc/postfix/dh2048.pem 2048 creates=/etc/postfix/dh2048.pem
+  notify:
+    - reload postfix
+
+- name: create dhparam 512
+  command: openssl dhparam -out /etc/postfix/dh_512.pem 512 creates=/etc/postfix/dh512.pem
+  notify:
+    - reload postfix
+
+- name: install letsencrypt cert
+  command: certbot certonly --rsa-key-size 4096 --renew-by-default --webroot -w /var/www/challenges -d {{ domain }} creates=/etc/letsencrypt/live/{{domain}}
+
+- name: start and enable postfix
+  service: name=postfix enabled=yes state=started
