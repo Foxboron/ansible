@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-exec /usr/bin/pass ansible
+/usr/bin/pass ansible

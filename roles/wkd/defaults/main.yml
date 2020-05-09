@@ -1,0 +1,6 @@
+---
+wkd_user: wkd
+wkd_path: /srv/http/wkd
+wkd_domain: openpgpkey.linderud.pw
+wkd_keyring_name: ansible.gpg
+wkd_keyring: ../files/{{wkd_keyring_name}}

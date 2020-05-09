@@ -1,0 +1,34 @@
+---
+
+- name: install hugo
+  package: name=gpg state=present
+
+- name: make {{wkd_user}} user
+  user: name={{wkd_user}} shell=/bin/false home={{ wkd_path }} create_home=yes
+
+- name: copy keyring
+  copy: src=../files/{{ wkd_keyring }} dest={{ wkd_path }}/.gnupg/pubring.gpg owner={{wkd_user}} group={{wkd_user}} mode=0600
+
+- name: install letsencrypt cert
+  command: certbot certonly --rsa-key-size 4096 --renew-by-default --webroot -w /var/www/challenges -d {{ wkd_domain }} creates=/etc/letsencrypt/live/{{wkd_domain}}
+
+- name: Create a directory if it does not exist
+  file: state=directory owner={{wkd_user}} group={{wkd_user}} path="{{wkd_path}}/.well-known/openpgpkey"
+
+- name: create WKD directory
+  shell: gpg --list-options show-only-fpr-mbox -k | /usr/lib/gnupg/gpg-wks-client -v --install-key
+  become: true 
+  become_user: "{{wkd_user}}"
+  args:
+    chdir: "{{wkd_path}}/.well-known"
+
+- name: fix wkd permission
+  file: state=directory mode=0755 recurse=yes path="{{wkd_path}}/.well-known"
+
+- name: make nginx log dir
+  file: path=/var/log/nginx/{{ wkd_domain }} state=directory owner=www-data group=adm mode=755
+
+- name: set up nginx
+  template: src=nginx.d.conf.j2 dest=/etc/nginx/nginx.d/{{wkd_domain}}.conf owner=root group=root mode=644
+  notify:
+    - restart nginx

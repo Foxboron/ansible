@@ -18,3 +18,6 @@
           domain: "blog.dedi.linderud.dev", 
           path: "/srv/http/blog", 
           tags: ['hugo', 'blog']}
+
+      - { role: wkd , tags: ['wkd'] }
+
