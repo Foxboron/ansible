@@ -9,13 +9,21 @@
           tags: ['nginx']}
 
       - { role: letsencrypt,
+          domains: [
+             "linderud.pw",
+             "smtp.linderud.pw",
+             "imap.linderud.pw",
+             "linderud.dev",
+             "bloat.dev",
+             "velox.pw",
+          ],
           tags: ['letsencrypt']}
 
       - { role: hugo,
           ssl: true,
           hugo_user: blog,
           hugo_repo: "https://github.com/foxboron/blog.git",
-          domain: "blog.dedi.linderud.dev", 
+          domain: "linderud.dev", 
           path: "/srv/http/blog", 
           tags: ['hugo', 'blog']}
 

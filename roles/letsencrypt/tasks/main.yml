@@ -47,3 +47,7 @@
 
 - name: restart nginx
   service: name=nginx state=reloaded
+
+- name: fetch domains
+  command: certbot certonly --rsa-key-size 4096 --renew-by-default --webroot -w /var/www/challenges -d {{ item }} creates=/etc/letsencrypt/live/{{item}}
+  with_items: "{{domains}}"
