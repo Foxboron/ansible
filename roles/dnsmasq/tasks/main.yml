@@ -7,16 +7,21 @@
   notify:
       - reload dnsmasq
 
+- name: set up resolv.dnsmasq
+  template: src=resold.dnsmasq.j2 dest=/etc/resolv.dnsmasq owner=root group=root mode=644
+  notify:
+      - reload dnsmasq
+
 - name: Creates hosts.d
   file: path=/etc/hosts.d state=directory owner=root group=root mode=644
 
 - name: blackhole ipv4 domains
-  command: wget -O- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts > /etc/hosts.d/maleware
+  shell: wget -O- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts > /etc/hosts.d/maleware
   notify:
       - restart dnsmasq
 
 - name: blackhole ipv6 domains
-  command: wget -O- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts  | sed 's/0.0.0.0/::1/g' > /etc/hosts.d/maleware-ipv6
+  shell: wget -O- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sed 's/0.0.0.0/::1/g' > /etc/hosts.d/maleware-ipv6
   notify:
       - restart dnsmasq
 

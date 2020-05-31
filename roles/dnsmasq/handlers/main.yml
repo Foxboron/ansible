@@ -2,3 +2,7 @@
 
 - name: restart dnsmasq
   service: name=dnsmasq state=restarted
+
+
+- name: reload dnsmasq
+  service: name=dnsmasq state=reloaded
