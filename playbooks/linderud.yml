@@ -27,5 +27,43 @@
           path: "/srv/http/blog", 
           tags: ['hugo', 'blog']}
 
+      - { role: hugo,
+          ssl: true,
+          hugo_user: archlinux,
+          hugo_repo: "https://github.com/foxboron/archlinux.no.git",
+          domain: "archlinux.no",
+          path: "/srv/http/archlinux.no",
+          tags: ['hugo', 'archlinux.no']}
+
+      - { role: dnsmasq,
+          tags: ['dnsmasq']}
+
+      - { role: wireguard,
+          tags: ['wireguard']}
+
+      - { role: cgit,
+          ssl: true,
+          path: "/srv/http/cgit",
+          domain: "git.linderud.dev",
+          tags: ['cgit', 'git']}
+
+      - { role: irc, 
+          domain: "irc.velox.pw", 
+          tags: ['irc']}
+
+      - { role: dovecot, tags: ['mail', "dovecot"] }
+
+      - { role: spampd, tags: ["mail", "spampd"] }
+
+      - { role: postfix, tags: ['mail'] }
+
+      - { role: opendkim, 
+          dkim_selector: linderud,
+          tags: ['mail']}
+
       - { role: wkd , tags: ['wkd'] }
+
+      - { role: backup, 
+          backup_keys: ["fox.pub"],
+          tags: ['backup']}
 
