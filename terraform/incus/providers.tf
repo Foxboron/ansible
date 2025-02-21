@@ -9,23 +9,4 @@ provider "incus" {
     token   = "token"
     default = true
   }
-
-  # remote {
-  #   name     = "docker"
-  #   scheme   = "https"
-  #   address  = "docker.io"
-  # }
-
-  # remote {
-  #   name     = "images"
-  #   scheme   = "https"
-  #   address  = "images.linuxcontainers.org"
-  # }
-
-  remote {
-    name    = "lscr"
-    scheme  = "https"
-    address = "lscr.io"
-  }
-
 }
