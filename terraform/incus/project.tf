@@ -1,8 +1,11 @@
-resource "incus_project" "default" {
-  name        = "default"
-  description = "Default Incus project"
-  config = {
-    "features.networks"       = "true"
-    "features.networks.zones" = "true"
-  }
+module "default" {
+  source = "./modules/default"
+}
+
+module "immich" {
+  source = "./modules/immich"
+}
+
+module "mediaserver" {
+  source = "./modules/mediaserver"
 }
