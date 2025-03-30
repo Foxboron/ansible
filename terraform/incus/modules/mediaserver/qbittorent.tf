@@ -60,7 +60,7 @@ resource "incus_instance" "qbittorrent" {
     name = "torrents"
     type = "disk"
     properties = {
-      source = "/var/torrents/"
+      source = "/var/mediaserver/torrents/"
       path = "/downloads/"
     }
   }

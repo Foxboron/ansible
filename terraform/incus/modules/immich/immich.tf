@@ -29,5 +29,9 @@ resource "incus_instance" "immich" {
       connect = "tcp:127.0.0.1:2283"
     }
   }
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 

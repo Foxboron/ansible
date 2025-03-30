@@ -1,5 +1,5 @@
 resource "incus_image" "sonarr_img" {
-  project = incus_project.mediaserver.name
+  project = incus_project.mediaserver.name 
   aliases = ["sonarr"]
   source_image = {
     remote = "docker"
@@ -39,21 +39,10 @@ resource "incus_instance" "sonarr" {
     name = "media"
     type = "disk"
     properties = {
-      source = "/var/media/tv/"
-      path = "/tv/"
+      source = "/var/mediaserver/"
+      path = "/data/"
     }
   }
-
-  device {
-    # Torrent mount
-    name = "torrents"
-    type = "disk"
-    properties = {
-      source = "/var/torrents/"
-      path = "/downloads/"
-    }
-  }
-
 
   device {
     name = "sonarr-config"

@@ -46,7 +46,7 @@ resource "incus_instance" "jellyfin" {
     name = "media"
     type = "disk"
     properties = {
-      source = "/var/media/"
+      source = "/var/mediaserver/media/"
       path = "/media/"
       readonly = true
     }

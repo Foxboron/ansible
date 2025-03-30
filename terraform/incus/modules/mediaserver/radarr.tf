@@ -39,21 +39,10 @@ resource "incus_instance" "radarr" {
     name = "media"
     type = "disk"
     properties = {
-      source = "/var/media/movies/"
-      path = "/movies/"
+      source = "/var/mediaserver/"
+      path = "/data/"
     }
   }
-
-  device {
-    # Torrent mount
-    name = "torrents"
-    type = "disk"
-    properties = {
-      source = "/var/torrents/"
-      path = "/downloads/"
-    }
-  }
-
 
   device {
     name = "radarr-config"
