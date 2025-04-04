@@ -30,8 +30,25 @@ resource "incus_instance" "immich" {
     }
   }
 
-  lifecycle {
-    ignore_changes = all
+  device {
+    # Bilder mount
+    name = "bilder"
+    type = "disk"
+    properties = {
+      source = "/var/bilder"
+      path = "/mnt/bilder"
+      readonly = true
+    }
+  }
+
+  device {
+    # Upload mount
+    name = "upload"
+    type = "disk"
+    properties = {
+      source = "/var/immich"
+      path = "/usr/src/app/upload"
+    }
   }
 }
 

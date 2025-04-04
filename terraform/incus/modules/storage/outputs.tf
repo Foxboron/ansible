@@ -1,0 +1,3 @@
+output "location" {
+  value = "/test"
+}

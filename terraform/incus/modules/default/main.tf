@@ -19,7 +19,7 @@ resource "incus_profile" "default" {
     name = "eth0"
     properties = {
       "name"    = "eth0"
-      "network" = "lxdbr0"
+      "network" = "incusbr1"
     }
     type = "nic"
   }
