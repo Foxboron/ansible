@@ -1,6 +1,8 @@
 resource "incus_image" "radarr_img" {
   project = incus_project.mediaserver.name
-  aliases = ["radarr"]
+  alias {
+    name = "radarr"
+  }
   source_image = {
     remote = "docker"
     name   = "linuxserver/radarr"

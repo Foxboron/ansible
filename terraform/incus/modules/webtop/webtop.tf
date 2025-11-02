@@ -1,6 +1,8 @@
 resource "incus_image" "webtop" {
   project = incus_project.webtop.name
-  aliases = ["webtop"]
+  alias {
+    name        = "webtop"
+  }
   source_image = {
     remote = "lscr"
     name   = "linuxserver/webtop:arch-i3"

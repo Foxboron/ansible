@@ -1,9 +1,11 @@
 resource "incus_image" "machine_learning" {
   project = incus_project.immich.name
-  aliases = ["machine_learning"]
+  alias {
+    name = "machine_learning"
+  }
   source_image = {
     remote = "ghcr"
-    name   = "immich-app/immich-machine-learning:release"
+    name   = "immich-app/immich-machine-learning:v2.0.1"
   }
 }
 
@@ -17,6 +19,7 @@ resource "incus_instance" "machine_learning" {
   name    = "immich-machine-learning"
   image   = incus_image.machine_learning.fingerprint
   project = incus_project.immich.name
+  target  = "amd"
 
   config = {
     "boot.autorestart"                     = true

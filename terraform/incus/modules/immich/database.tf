@@ -1,9 +1,11 @@
 resource "incus_image" "postgres" {
   project = incus_project.immich.name
-  aliases = ["postgres"]
+  alias {
+    name = "postgres"
+  }
   source_image = {
-    remote = "docker"
-    name   = "tensorchord/pgvecto-rs:pg14-v0.2.0"
+    remote = "ghcr"
+    name   = "immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0"
   }
 }
 
@@ -17,6 +19,7 @@ resource "incus_instance" "database" {
   name    = "database"
   image   = incus_image.postgres.fingerprint
   project = incus_project.immich.name
+  target  = "amd"
 
   config = {
     "boot.autorestart"                     = true
@@ -24,7 +27,7 @@ resource "incus_instance" "database" {
     "environment.POSTGRES_PASSWORD"        =  local.envs["DB_PASSWORD"]
     "environment.POSTGRES_DB"              =  local.envs["DB_DATABASE_NAME"]
     "environment.POSTGRES_INITDB_ARGS"     =  "--data-checksums"
-    "raw.lxc"                              = "lxc.init.cmd=/usr/lib/postgresql/14/bin/postgres -c shared_preload_libraries=vectors.so -c 'search_path=\"$user\", public, vectors' -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on"
+    "environment.DB_STORAGE_TYPE"          = "HDD"
   }
 
   device {

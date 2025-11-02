@@ -9,6 +9,5 @@ resource "incus_instance" "haos" {
   }
   profiles         = [
     "default",
-    "macvlan",
   ]
 }

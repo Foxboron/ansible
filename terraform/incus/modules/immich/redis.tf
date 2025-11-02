@@ -1,9 +1,11 @@
 resource "incus_image" "redis" {
   project = incus_project.immich.name
-  aliases = ["redis"]
+  alias {
+    name = "redis"
+  }
   source_image = {
     remote = "docker"
-    name   = "redis:6.2-alpine"
+    name   = "valkey/valkey:8-bookworm"
   }
 }
 
@@ -11,6 +13,7 @@ resource "incus_instance" "immich_redis" {
   name    = "redis"
   image   = incus_image.redis.fingerprint
   project = incus_project.immich.name
+  target  = "amd"
 
   config = {
     "boot.autorestart"                     = true

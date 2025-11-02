@@ -1,9 +1,11 @@
 resource "incus_image" "immich" {
   project = incus_project.immich.name
-  aliases = ["immich"]
+  alias {
+    name = "immich"
+  }
   source_image = {
     remote = "ghcr"
-    name   = "immich-app/immich-server:release"
+    name   = "immich-app/immich-server:v2.0.1"
   }
 }
 
@@ -11,6 +13,7 @@ resource "incus_instance" "immich" {
   name    = "immich"
   image   = incus_image.immich.fingerprint
   project = incus_project.immich.name
+  target  = "amd"
 
   config = {
     "boot.autorestart"                     = true

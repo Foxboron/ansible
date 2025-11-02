@@ -10,6 +10,7 @@ resource "incus_project" "default" {
 resource "incus_profile" "default" {
   description = "Default Incus profile"
   name        = "default"
+  project     = "default"
 
   config = {
     "security.secureboot" = "false"
@@ -18,8 +19,8 @@ resource "incus_profile" "default" {
   device {
     name = "eth0"
     properties = {
-      "name"    = "eth0"
-      "network" = "incusbr1"
+      "nictype" = "bridged"
+      "parent"  = "br0"
     }
     type = "nic"
   }

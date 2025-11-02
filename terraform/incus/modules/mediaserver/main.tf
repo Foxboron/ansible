@@ -25,7 +25,8 @@ resource "incus_project" "mediaserver" {
     "restricted.devices.disk"       = "allow"
     "restricted.devices.gpu"        = "allow"
     "restricted.devices.proxy"      = "allow"
-    "restricted.networks.access"    = "${incus_network.br_mediaserver.name}"
+    "restricted.devices.nic"        = "allow"
+    "restricted.networks.access"    = "${incus_network.br_mediaserver.name},br0"
   }
 }
 
@@ -38,12 +39,11 @@ resource "incus_profile" "default" {
 
   device {
     name = "eth0"
-    type = "nic"
-
     properties = {
-      name = "eth0"
-      network = "${incus_network.br_mediaserver.name}"
+      "nictype" = "bridged"
+      "parent"  = "br0"
     }
+    type = "nic"
   }
 
   device {

@@ -1,6 +1,8 @@
 resource "incus_image" "jellyfin_img" {
   project = incus_project.mediaserver.name
-  aliases = ["jellyfin"]
+  alias {
+    name = "jellyfin"
+  }
   source_image = {
     remote = "docker"
     name   = "linuxserver/jellyfin"
@@ -24,6 +26,7 @@ resource "incus_instance" "jellyfin" {
   name    = "jellyfin"
   image   = incus_image.jellyfin_img.fingerprint
   project = incus_project.mediaserver.name
+  target = "amd"
 
   config = {
     "environment.PUID" =  "1001"

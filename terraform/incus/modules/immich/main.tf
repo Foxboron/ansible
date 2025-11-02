@@ -19,6 +19,7 @@ resource "incus_project" "immich" {
     "restricted.devices.gpu"         = "allow"
     "restricted.devices.proxy"       = "allow"
     "restricted.containers.lowlevel" = "allow"
+    "restricted.snapshots"           = "allow" 
     "restricted.networks.access"       = "${incus_network.br_immich.name}"
   }
 }

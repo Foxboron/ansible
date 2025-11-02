@@ -1,6 +1,8 @@
 resource "incus_image" "qbittorrent_img" {
   project = incus_project.mediaserver.name
-  aliases = ["qbittorrent"]
+  alias {
+    name = "qbittorrent"
+  }
   source_image = {
     remote = "docker"
     name   = "linuxserver/qbittorrent"
