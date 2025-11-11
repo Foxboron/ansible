@@ -1,3 +1,23 @@
-locals {
-  envs = { for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1]) }
+variable "immich_version" {
+  type = string
+}
+
+variable "postgres_version" {
+  type = string
+}
+
+variable "db_username" {
+  type    = string
+  default = "postgres"
+}
+
+variable "db_password" {
+  type      = string
+  default   = "postgres"
+  sensitive   = true
+}
+
+variable "db_database_name" {
+  type    = string
+  default = "immich"
 }

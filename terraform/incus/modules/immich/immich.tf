@@ -5,7 +5,7 @@ resource "incus_image" "immich" {
   }
   source_image = {
     remote = "ghcr"
-    name   = "immich-app/immich-server:v2.0.1"
+    name   = "immich-app/immich-server:${var.immich_version}"
   }
 }
 
@@ -17,9 +17,9 @@ resource "incus_instance" "immich" {
 
   config = {
     "boot.autorestart"                     = true
-    "environment.POSTGRES_USER"            =  local.envs["DB_USERNAME"]
-    "environment.POSTGRES_PASSWORD"        =  local.envs["DB_PASSWORD"]
-    "environment.POSTGRES_DB"              =  local.envs["DB_DATABASE_NAME"]
+    "environment.POSTGRES_USER"            =  var.db_username
+    "environment.POSTGRES_PASSWORD"        =  var.db_password
+    "environment.POSTGRES_DB"              =  var.db_database_name
     "environment.TZ"                       =  "Europe/Oslo"
   }
 

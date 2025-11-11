@@ -5,7 +5,7 @@ resource "incus_image" "machine_learning" {
   }
   source_image = {
     remote = "ghcr"
-    name   = "immich-app/immich-machine-learning:v2.0.1"
+    name   = "immich-app/immich-machine-learning:${var.immich_version}"
   }
 }
 

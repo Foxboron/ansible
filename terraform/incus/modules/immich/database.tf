@@ -5,7 +5,7 @@ resource "incus_image" "postgres" {
   }
   source_image = {
     remote = "ghcr"
-    name   = "immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0"
+    name   = "immich-app/postgres:${var.postgres_version}"
   }
 }
 
@@ -23,9 +23,9 @@ resource "incus_instance" "database" {
 
   config = {
     "boot.autorestart"                     = true
-    "environment.POSTGRES_USER"            =  local.envs["DB_USERNAME"]
-    "environment.POSTGRES_PASSWORD"        =  local.envs["DB_PASSWORD"]
-    "environment.POSTGRES_DB"              =  local.envs["DB_DATABASE_NAME"]
+    "environment.POSTGRES_USER"            =  var.db_username
+    "environment.POSTGRES_PASSWORD"        =  var.db_password
+    "environment.POSTGRES_DB"              =  var.db_database_name
     "environment.POSTGRES_INITDB_ARGS"     =  "--data-checksums"
     "environment.DB_STORAGE_TYPE"          = "HDD"
   }

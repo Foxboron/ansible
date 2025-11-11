@@ -1,5 +1,9 @@
 locals {
-  cluster_members = ["hackeriet", "byggmester:"]
+  cluster_members = ["hackeriet", "byggmester", "amd"]
+}
+
+locals {
+  envs = { for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1]) }
 }
 
 # module "storage" {
@@ -16,6 +20,12 @@ module "default" {
 
 module "immich" {
   source = "./modules/immich"
+
+  immich_version  = "v2.2.3"
+  postgres_version = "14-vectorchord0.4.3-pgvectors0.2.0"
+
+  db_username =  local.envs["DB_USERNAME"]
+  db_password =  local.envs["DB_PASSWORD"]
 }
 
 module "mediaserver" {
