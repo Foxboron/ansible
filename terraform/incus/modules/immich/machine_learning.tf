@@ -13,6 +13,7 @@ resource "incus_storage_volume" "model_cache" {
   project = incus_project.immich.name
   name = "model-cache"
   pool = "default"
+  target = "amd"
 }
 
 resource "incus_instance" "machine_learning" {
@@ -22,7 +23,7 @@ resource "incus_instance" "machine_learning" {
   target  = "amd"
 
   config = {
-    "boot.autorestart"                     = true
+    "boot.autorestart" = true
   }
 
   device {
@@ -35,4 +36,3 @@ resource "incus_instance" "machine_learning" {
     }
   }
 }
-

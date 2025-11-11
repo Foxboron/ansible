@@ -14,9 +14,14 @@ locals {
 #   path = "/var/incus"
 # }
 
+
 module "default" {
   source = "./modules/default"
 }
+
+# module "network" {
+#   source = "./modules/network"
+# }
 
 module "immich" {
   source = "./modules/immich"
