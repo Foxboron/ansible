@@ -2,7 +2,7 @@ terraform {
   required_providers {
     incus = {
       source  = "lxc/incus"
-      version = "0.5.1"
+      version = "1.0.0"
     }
   }
 }
@@ -11,19 +11,37 @@ terraform {
 provider "incus" {
   generate_client_certificates = true
   accept_remote_certificate    = true
+  default_remote = "byggmester"
 
   remote {
     name    = "local"
-    scheme  = "unix"
-    address = ""
+    address = "unix://"
   }
 
   remote {
     name    = "byggmester"
-    scheme  = "https"
-    address = "100.126.240.101"
-    port    = "8444"
+    address = "https://100.126.240.101:8444"
     token   = "token"
-    default = true
+  }
+
+  remote {
+    name     = "docker"
+    address  = "https://docker.io"
+    protocol = "oci"
+    public   = true
+  }
+
+  remote {
+    name     = "ghcr"
+    address  = "https://ghcr.io"
+    protocol = "oci"
+    public   = true
+  }
+
+  remote {
+    name     = "lscr"
+    address  = "https://lscr.io"
+    protocol = "oci"
+    public   = true
   }
 }
