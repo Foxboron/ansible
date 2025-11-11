@@ -9,6 +9,7 @@ resource "openwrt_configfile" "network" {
 
         config globals 'globals'
         	option ula_prefix 'fdfb:bfdd:24e2::/48'
+        	option packet_steering '1'
 
         config device
         	option name 'br-lan'
@@ -18,9 +19,10 @@ resource "openwrt_configfile" "network" {
         config interface 'lan'
         	option device 'br-lan'
         	option proto 'static'
-        	option ipaddr '192.168.8.1'
+        	option ipaddr '192.168.1.1'
         	option netmask '255.255.255.0'
         	option ip6assign '60'
+        	list dns '8.8.8.8'
 
         config interface 'wan'
         	option device 'eth0'

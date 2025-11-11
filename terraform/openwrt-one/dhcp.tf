@@ -22,6 +22,8 @@ resource "openwrt_configfile" "dhcp" {
         	option ednspacket_max '1232'
         	option filter_aaaa '0'
         	option filter_a '0'
+        	option local '/local/'
+        	option domain 'local'
 
         config dhcp 'lan'
         	option interface 'lan'

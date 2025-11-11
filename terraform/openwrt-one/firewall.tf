@@ -121,5 +121,13 @@ resource "openwrt_configfile" "firewall" {
         	option dest_port '500'
         	option proto 'udp'
         	option target 'ACCEPT'
+
+        config rule
+        	option name 'Allow-mDNS'
+        	option src_port '5353'
+        	option src '*'
+        	option target 'ACCEPT'
+        	option dest_port '5353'
+        	option proto 'udp'
     EOT
 }
