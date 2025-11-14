@@ -20,6 +20,7 @@ resource "incus_instance" "immich" {
     "environment.POSTGRES_USER"            =  var.db_username
     "environment.POSTGRES_PASSWORD"        =  var.db_password
     "environment.POSTGRES_DB"              =  var.db_database_name
+    "oci.entrypoint"                       =  "tini -- /bin/bash -c 'sleep 5s && start.sh'"
     "environment.TZ"                       =  "Europe/Oslo"
   }
 
