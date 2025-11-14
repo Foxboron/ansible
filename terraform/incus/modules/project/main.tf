@@ -16,7 +16,7 @@ resource "incus_project" "project" {
     "restricted.containers.lowlevel" = "allow"
     "restricted.snapshots"           = "allow"
     "restricted.devices.nic"         = "allow"
-    "restricted.networks.access"     = "br0"
+    "restricted.networks.access"     = "incusbr0,br0"
   }
 }
 
