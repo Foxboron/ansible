@@ -31,15 +31,17 @@ module "immich" {
 
   db_username =  local.envs["DB_USERNAME"]
   db_password =  local.envs["DB_PASSWORD"]
+
+  immich_api_key = local.envs["IMMICH_API_KEY"]
 }
 
 module "mediaserver" {
   source = "./modules/mediaserver"
 }
 
-module "webtop" {
-  source = "./modules/webtop"
-}
+# module "webtop" {
+#   source = "./modules/webtop"
+# }
 
 module "syncthing" {
   source = "./modules/syncthing"

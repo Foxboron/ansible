@@ -21,3 +21,7 @@ variable "db_database_name" {
   type    = string
   default = "immich"
 }
+
+variable "immich_api_key" {
+  type    = string
+}
