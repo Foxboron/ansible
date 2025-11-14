@@ -1,8 +1,3 @@
-resource "incus_network" "br_immich" {
-  name = "br-immich"
-  description = "immich network"
-}
-
 resource "incus_project" "immich" {
   name        = "immich"
   description = "immich project"
@@ -20,7 +15,8 @@ resource "incus_project" "immich" {
     "restricted.devices.proxy"       = "allow"
     "restricted.containers.lowlevel" = "allow"
     "restricted.snapshots"           = "allow" 
-    "restricted.networks.access"       = "${incus_network.br_immich.name}"
+    "restricted.devices.nic"         = "allow"
+    "restricted.networks.access"       = "br0"
   }
 }
 
@@ -31,12 +27,11 @@ resource "incus_profile" "default" {
 
   device {
     name = "eth0"
-    type = "nic"
-
     properties = {
-      name = "eth0"
-      network = "${incus_network.br_immich.name}"
+      "nictype" = "bridged"
+      "parent"  = "br0"
     }
+    type = "nic"
   }
 
   device {
@@ -48,5 +43,3 @@ resource "incus_profile" "default" {
     }
   }
 }
-
-
