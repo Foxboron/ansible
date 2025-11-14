@@ -19,6 +19,10 @@ module "default" {
   source = "./modules/default"
 }
 
+module "dns" {
+  source = "./modules/dns"
+}
+
 # module "network" {
 #   source = "./modules/network"
 # }
