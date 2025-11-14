@@ -25,7 +25,7 @@ provider "incus" {
   }
 
   remote {
-    name     = "docker"
+    name     = "dockerio"
     address  = "https://docker.io"
     protocol = "oci"
     public   = true
