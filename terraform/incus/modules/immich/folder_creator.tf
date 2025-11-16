@@ -26,7 +26,7 @@ resource "incus_instance" "auto_album_instance_jpg" {
     "environment.FIND_ARCHIVED_ASSETS"     = "1"
     "environment.UNATTENDED"               = "1"
     "environment.ALBUM_NAME_POST_REGEX1"   = "'(\\d+) (.*)' '\\2 \\1'"
-    "environment.CRON_EXPRESSION"          = "0/10 * * * *" 
+    "environment.CRON_EXPRESSION"          = "0/5 * * * *" 
     "environment.TZ"                       =  "Europe/Oslo"
   }
 }
@@ -48,7 +48,7 @@ resource "incus_instance" "auto_album_instance_raw" {
     "environment.FIND_ARCHIVED_ASSETS"     = "1"
     "environment.UNATTENDED"               = "1"
     "environment.ALBUM_NAME_POST_REGEX1"   = "'(\\d+) (.*)' '\\2 \\1 - RAW'"
-    "environment.CRON_EXPRESSION"          = "0/10 * * * *" 
+    "environment.CRON_EXPRESSION"          = "0/5 * * * *" 
     "environment.TZ"                       =  "Europe/Oslo"
   }
 }
