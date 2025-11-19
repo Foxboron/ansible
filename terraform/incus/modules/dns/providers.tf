@@ -3,5 +3,9 @@ terraform {
     incus = {
       source  = "lxc/incus"
     }
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+    }
   }
 }
+

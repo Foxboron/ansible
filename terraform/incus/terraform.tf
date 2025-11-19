@@ -4,6 +4,10 @@ terraform {
       source  = "lxc/incus"
       version = "1.0.0"
     }
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "1.56.0"
+    }
   }
 }
 

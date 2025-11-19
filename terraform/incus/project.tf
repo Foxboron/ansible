@@ -4,6 +4,7 @@ locals {
 
 locals {
   envs = { for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1]) }
+  primary_dns_server = "185.35.202.243"
 }
 
 # module "storage" {
@@ -21,6 +22,13 @@ module "default" {
 
 module "dns" {
   source = "./modules/dns"
+  tsig_keys_dir = "/srv/hackeriet.linderud.dev/coredns01/tsig/"
+  secondary_zones = [
+    { domain = "bloat.dev",      ip = local.primary_dns_server },
+    { domain = "secureboot.dev", ip = local.primary_dns_server },
+    { domain = "linderud.dev",   ip = local.primary_dns_server },
+    { domain = "linderud.pw",    ip = local.primary_dns_server },
+  ]
 }
 
 # module "network" {
