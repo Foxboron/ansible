@@ -27,12 +27,13 @@ module "dns" {
   ns_records = [
     "ns-global.kjsl.com",
     "ns1.first-ns.de",
+    "coredns02.bloat.dev",
   ]
   secondary_zones = [
     { domain = "bloat.dev" },
-    # { domain = "secureboot.dev" },
-    # { domain = "linderud.dev" },
-    # { domain = "linderud.pw" },
+    { domain = "secureboot.dev" },
+    { domain = "linderud.dev" },
+    { domain = "linderud.pw" },
   ]
 }
 
