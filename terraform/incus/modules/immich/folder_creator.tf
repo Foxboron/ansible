@@ -17,7 +17,7 @@ resource "incus_instance" "auto_album_instance_jpg" {
 
   config = {
     "boot.autorestart"                     = true
-    "environment.API_URL"                  = "https://bilder.linderud.dev/api/"
+    "environment.API_URL"                  = "http://immich/api/"
     "environment.API_KEY"                  = var.immich_api_key
     "environment.ROOT_PATH"                = "/mnt/bilder"
     "environment.ALBUM_LEVELS"             = "2"
@@ -26,7 +26,7 @@ resource "incus_instance" "auto_album_instance_jpg" {
     "environment.FIND_ARCHIVED_ASSETS"     = "1"
     "environment.UNATTENDED"               = "1"
     "environment.ALBUM_NAME_POST_REGEX1"   = "'(\\d+) (.*)' '\\2 \\1'"
-    "environment.CRON_EXPRESSION"          = "0/5 * * * *" 
+    "environment.CRON_EXPRESSION"          = "*/5 * * * *" 
     "environment.TZ"                       =  "Europe/Oslo"
   }
 }
@@ -39,7 +39,7 @@ resource "incus_instance" "auto_album_instance_raw" {
 
   config = {
     "boot.autorestart"                     = true
-    "environment.API_URL"                  = "https://bilder.linderud.dev/api/"
+    "environment.API_URL"                  = "http://immich/api/"
     "environment.API_KEY"                  = var.immich_api_key
     "environment.ROOT_PATH"                = "/mnt/bilder"
     "environment.ALBUM_LEVELS"             = "2"
@@ -48,7 +48,7 @@ resource "incus_instance" "auto_album_instance_raw" {
     "environment.FIND_ARCHIVED_ASSETS"     = "1"
     "environment.UNATTENDED"               = "1"
     "environment.ALBUM_NAME_POST_REGEX1"   = "'(\\d+) (.*)' '\\2 \\1 - RAW'"
-    "environment.CRON_EXPRESSION"          = "0/5 * * * *" 
+    "environment.CRON_EXPRESSION"          = "*/5 * * * *" 
     "environment.TZ"                       =  "Europe/Oslo"
   }
 }
