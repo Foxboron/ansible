@@ -99,7 +99,6 @@ resource "incus_instance" "syncthing" {
   }
 
   device {
-    # data2 mount
     name = "data2"
     type = "disk"
     properties = {

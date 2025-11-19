@@ -1,8 +1,3 @@
-resource "incus_network" "br_webtop" {
-  name = "br-webtop"
-  description = "webtop network"
-}
-
 resource "incus_project" "webtop" {
   name        = "webtop"
   description = "webtop project"
@@ -19,7 +14,9 @@ resource "incus_project" "webtop" {
     "restricted.devices.gpu"         = "allow"
     "restricted.devices.proxy"       = "allow"
     "restricted.containers.lowlevel" = "allow"
-    "restricted.networks.access"       = "${incus_network.br_webtop.name}"
+    "restricted.snapshots"           = "allow"
+    "restricted.devices.nic"         = "allow"
+    "restricted.networks.access"       = "br0"
   }
 }
 
@@ -30,12 +27,11 @@ resource "incus_profile" "default" {
 
   device {
     name = "eth0"
-    type = "nic"
-
     properties = {
-      name = "eth0"
-      network = "${incus_network.br_webtop.name}"
+      "nictype" = "bridged"
+      "parent"  = "br0"
     }
+    type = "nic"
   }
 
   device {
