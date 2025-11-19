@@ -23,11 +23,12 @@ module "default" {
 module "dns" {
   source = "./modules/dns"
   tsig_keys_dir = "/srv/hackeriet.linderud.dev/coredns01/tsig/"
+  primary_dns_server = local.primary_dns_server
   secondary_zones = [
-    { domain = "bloat.dev",      ip = local.primary_dns_server },
-    { domain = "secureboot.dev", ip = local.primary_dns_server },
-    { domain = "linderud.dev",   ip = local.primary_dns_server },
-    { domain = "linderud.pw",    ip = local.primary_dns_server },
+    { domain = "bloat.dev" },
+    { domain = "secureboot.dev" },
+    { domain = "linderud.dev" },
+    { domain = "linderud.pw" },
   ]
 }
 
