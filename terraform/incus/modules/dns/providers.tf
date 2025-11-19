@@ -6,6 +6,9 @@ terraform {
     hcloud = {
       source  = "hetznercloud/hcloud"
     }
+    porkbun = {
+      source = "marcfrederick/porkbun"
+    }
   }
 }
 

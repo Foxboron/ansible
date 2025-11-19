@@ -8,6 +8,10 @@ terraform {
       source  = "hetznercloud/hcloud"
       version = "1.56.0"
     }
+    porkbun = {
+      source = "marcfrederick/porkbun"
+      version = "1.3.1"
+    }
   }
 }
 

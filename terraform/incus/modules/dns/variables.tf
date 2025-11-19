@@ -15,6 +15,11 @@ variable "primary_dns_server" {
   default = ""
 }
 
+variable "ns_records" {
+  type = list(string)
+  default = []
+}
+
 variable "tsig_keys_dir" {
   type = string
   default = ""
