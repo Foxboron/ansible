@@ -25,9 +25,10 @@ module "dns" {
   tsig_keys_dir = "/srv/hackeriet.linderud.dev/coredns01/tsig/"
   primary_dns_server = local.primary_dns_server
   ns_records = [
+    "coredns02.bloat.dev",
+    "coredns03.bloat.dev",
     "ns-global.kjsl.com",
     "ns1.first-ns.de",
-    "coredns02.bloat.dev",
   ]
   secondary_zones = [
     { domain = "bloat.dev" },

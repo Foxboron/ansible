@@ -24,8 +24,8 @@ resource "hcloud_zone" "secondary_zone" {
   primary_nameservers = [
     {
       address  = each.value.ip == "" ? var.primary_dns_server : each.value.ip
-      tsig_key = each.value.tsig_key == "" ? data.local_command.keymgr[each.key].stdout : each.value.tsig_key
-      tsig_algorithm = each.value.tsig_algorithm
+      # tsig_key = each.value.tsig_key == "" ? data.local_command.keymgr[each.key].stdout : each.value.tsig_key
+      # tsig_algorithm = each.value.tsig_algorithm
     },
   ]
   delete_protection = false
