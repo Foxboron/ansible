@@ -1,0 +1,39 @@
+server:
+    rundir: "/run/knot"
+    user: knot:knot
+    automatic-acl: on
+    listen: [ 0.0.0.0@53, ::@53 ]
+
+log:
+  - target: syslog
+    any: info
+
+database:
+    storage: "/var/lib/knot"
+
+{{ tsig_key_section }}
+
+remote:
+  - id: primary
+    address: {{ primary_dns_address }}@{{ primary_dns_port }}
+    key: {{ inventory_hostname }}
+
+# Rate-limiting to prevent dns reflection amplification
+mod-rrl:
+  - id: default
+    rate-limit: 200
+    #slip: 2
+
+mod-stats:
+  - id: default
+    query-type: on
+
+template:
+  - id: default
+    master: primary
+    global-module: [mod-rrl/default, mod-stats/default]
+
+zone:
+{% for _, values in dns_zones.items() %}
+  - domain: {{values.domain}}
+{% endfor %}

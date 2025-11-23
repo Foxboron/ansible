@@ -1,0 +1,13 @@
+---
+
+- name: install knot-dns
+  package: name=knot state=present
+
+- name: Read content from a file
+  set_fact:
+    tsig_key_section: "{{ lookup('file', '/srv/hackeriet.linderud.dev/coredns01/tsig/{{inventory_hostname}}') }}"
+
+- name: set up knot-dns secondary
+  template: src=knot.conf.j2 dest=/etc/knot/knot.conf owner=root group=knot mode=640
+  notify:
+    - restart knot
