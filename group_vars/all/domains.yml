@@ -1,0 +1,10 @@
+---
+primary_dns_address: 185.35.202.243
+primary_dns_port: 185.35.202.243
+
+dns_zones:
+  - domain: linderud.dev
+  - domain: bloat.dev
+  - domain: linderud.pw
+  - domain: secureboot.dev
+
