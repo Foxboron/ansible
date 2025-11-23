@@ -5,4 +5,8 @@ velox.vulpes.pw
 10.100.200.129
 
 [linderud]
-dedi.linderud.dev
+linderud.dev
+
+[dns_secondaries]
+coredns02.bloat.dev
+coredns03.bloat.dev

@@ -1,0 +1,5 @@
+ipv4_address: 192.168.1.8
+ipv4_gateway: 192.168.1.1
+ipv4_dns: 192.168.1.1
+
+wireguard_address: 10.100.100.4
