@@ -5,7 +5,8 @@ resource "incus_instance" "haos" {
   config           = {
     "limits.cpu"    = "2"
     "limits.memory" = "4GiB"
-    "raw.qemu"      = "-chardev serial,path=/dev/ttyConBee2,id=acm -usb -device usb-serial,chardev=acm"
+    # "raw.qemu"      = "-chardev serial,path=/dev/ttyConBee2,id=acm -usb -device usb-serial,chardev=acm"
+    "raw.qemu"      = "-chardev serial,path=/dev/ttyACM0,id=acm -usb -device usb-serial,chardev=acm"
   }
   profiles         = [
     "default",
