@@ -72,3 +72,12 @@ module "ca" {
   name = "ca"
   step_ca_version = "0.29.0-hsm"
 }
+
+module "miniflux" {
+  source = "./modules/miniflux"
+  db_username         =  local.envs["MINIFLUX_DB_USERNAME"]
+  db_password         =  local.envs["MINIFLUX_DB_PASSWORD"]
+
+  miniflux_username   =  local.envs["MINIFLUX_USERNAME"]
+  miniflux_password   =  local.envs["MINIFLUX_PASSWORD"]
+}
