@@ -56,6 +56,7 @@ module "immich" {
 
 module "mediaserver" {
   source = "./modules/mediaserver"
+  jellyswarrm_password = "${var.jellyswarrm_password}"
 }
 
 # module "webtop" {

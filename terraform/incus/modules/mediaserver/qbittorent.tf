@@ -20,6 +20,7 @@ resource "incus_instance" "qbittorrent" {
   name    = "qbittorrent"
   image   = incus_image.qbittorrent_img.fingerprint
   project = incus_project.mediaserver.name
+  target = "byggmester"
 
   config = {
     "environment.PUID"            = "1001"

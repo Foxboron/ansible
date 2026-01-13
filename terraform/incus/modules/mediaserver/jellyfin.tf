@@ -85,3 +85,48 @@ resource "incus_instance" "jellyfin" {
     }
   }
 }
+
+resource "incus_image" "jellyswarrm_img" {
+  project = incus_project.mediaserver.name
+  alias {
+    name = "jellyswarrm"
+  }
+  source_image = {
+    remote = "ghcr"
+    name   = "llukas22/jellyswarrm:latest"
+  }
+}
+
+
+resource "incus_storage_volume" "jellyswarrm_data" {
+  project = incus_project.mediaserver.name
+  name = "jellyswarrm-data"
+  pool = "default"
+  target = "amd"
+}
+
+resource "incus_instance" "jellyswarrm" {
+  name    = "jellyswarrm"
+  image   = incus_image.jellyswarrm_img.fingerprint
+  project = incus_project.mediaserver.name
+  target = "amd"
+
+  config = {
+    "environment.TZ"                     =  "Europe/Oslo"
+    "environment.JELLYSWARRM_USERNAME"   =  "admin"
+    "environment.JELLYSWARRM_PASSWORD"   =  "${var.jellyswarrm_password}"
+  }
+
+  device {
+    name = "jellyswarrm-data"
+    type = "disk"
+    properties = {
+      path   = "/app/data"
+      source = incus_storage_volume.jellyswarrm_data.name
+      pool = "default"
+    }
+  }
+}
+
+
+
