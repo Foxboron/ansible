@@ -17,7 +17,7 @@ resource "incus_instance" "auto_album_instance_jpg" {
 
   config = {
     "boot.autorestart"                     = true
-    "environment.API_URL"                  = "http://immich/api/"
+    "environment.API_URL"                  = "https://bilder.linderud.dev/api/"
     "environment.API_KEY"                  = var.immich_api_key
     "environment.ROOT_PATH"                = "/mnt/bilder"
     "environment.ALBUM_LEVELS"             = "2"
@@ -39,7 +39,7 @@ resource "incus_instance" "auto_album_instance_raw" {
 
   config = {
     "boot.autorestart"                     = true
-    "environment.API_URL"                  = "http://immich/api/"
+    "environment.API_URL"                  = "https://bilder.linderud.dev/api/"
     "environment.API_KEY"                  = var.immich_api_key
     "environment.ROOT_PATH"                = "/mnt/bilder"
     "environment.ALBUM_LEVELS"             = "2"
