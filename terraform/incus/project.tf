@@ -66,3 +66,9 @@ module "mediaserver" {
 module "syncthing" {
   source = "./modules/syncthing"
 }
+
+module "ca" {
+  source = "./modules/ca"
+  name = "ca"
+  step_ca_version = "0.29.0-hsm"
+}
