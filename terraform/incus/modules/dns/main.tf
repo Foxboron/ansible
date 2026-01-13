@@ -29,7 +29,7 @@ resource "incus_instance" "dns01" {
   name    = "coredns01"
   image   = incus_image.knot.fingerprint
   project = module.project.name
-  target = "hackeriet"
+  target = "byggmester"
   # We override the ethernet here
   profiles = []
 
@@ -38,24 +38,6 @@ resource "incus_instance" "dns01" {
     "oci.entrypoint" =  "knotd"
   }
 
-  device {
-    name = "port-proxy-udp-53"
-    type = "proxy"
-    properties = {
-      connect = "udp:127.0.0.1:53"
-      listen = "udp:185.35.202.243:53"
-    }
-  }
-
-  device {
-    name = "port-tailscale0-udp-53"
-    type = "proxy"
-    properties = {
-      connect = "udp:10.177.187.83:53"
-      listen = "udp:100.111.115.76:53"
-      nat = "true"
-    }
-  }
 
   device {
     # Port tcp-54 forward
@@ -63,7 +45,17 @@ resource "incus_instance" "dns01" {
     type = "proxy"
     properties = {
       connect = "tcp:10.177.187.83:53"
-      listen = "tcp:185.35.202.243:53"
+      listen = "tcp:10.100.200.2:53"
+      nat = "true"
+    }
+  }
+
+  device {
+    name = "port-tcp-53-v6"
+    type = "proxy"
+    properties = {
+      connect = "tcp:[fd42:4bf7:ed45:756e:6376:c294:9e7e:8c2b]:53"
+      listen = "tcp:[fdc9::2]:53"
       nat = "true"
     }
   }
@@ -73,7 +65,17 @@ resource "incus_instance" "dns01" {
     type = "proxy"
     properties = {
       connect = "udp:10.177.187.83:53"
-      listen = "udp:185.35.202.243:53"
+      listen = "udp:10.100.200.2:53"
+      nat = "true"
+    }
+  }
+
+  device {
+    name = "port-udp-53-v6"
+    type = "proxy"
+    properties = {
+      connect = "udp:[fd42:4bf7:ed45:756e:6376:c294:9e7e:8c2b]:53"
+      listen = "udp:[fdc9::2]:53"
       nat = "true"
     }
   }
@@ -91,8 +93,18 @@ resource "incus_instance" "dns01" {
     name = "incusbr0"
     type = "nic"
     properties = {
-      "ipv4.address" = "10.177.187.83"
       "network" = "incusbr0"
+      "ipv4.address" = "10.177.187.83"
+      "ipv6.address" = "fd42:4bf7:ed45:756e:6376:c294:9e7e:8c2b"
+    }
+  }
+
+  device {
+    name = "br0"
+    type = "nic"
+    properties = {
+      "nictype" = "bridged"
+      "parent" = "br0"
     }
   }
 
@@ -100,7 +112,7 @@ resource "incus_instance" "dns01" {
     name = "config"
     type = "disk"
     properties = {
-      source = "/srv/coredns01/"
+      source = "/var/syncthing/data1/linderud.dev/coredns01/"
       path = "/config"
     }
   }
