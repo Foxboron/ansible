@@ -10,6 +10,7 @@ resource "openwrt_configfile" "network" {
         config globals 'globals'
         	option ula_prefix 'fdfb:bfdd:24e2::/48'
         	option packet_steering '1'
+        	option dhcp_default_duid '000474038bd0360443be816ca09c811705c2'
 
         config device
         	option name 'br-lan'
@@ -23,6 +24,8 @@ resource "openwrt_configfile" "network" {
         	option netmask '255.255.255.0'
         	option ip6assign '60'
         	list dns '8.8.8.8'
+        	list dns_search 'local'
+        	list dns_search 'home.arpa'
 
         config interface 'wan'
         	option device 'eth0'
